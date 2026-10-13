@@ -474,3 +474,7 @@ Notes:
 | An accepted supplier update needs undoing | The Accepted Update Locked rule blocks edits by design. Deactivate the rule, set the update back to Pending (clearing Reviewed By and Review Date), restore any Deliverable fields the Update Review flow changed, then reactivate the rule |
 
 Picklist values use plain hyphens (for example `Sev 1 - Critical Outage`, `4 - Highly Likely`) rather than the en dashes in the spec, to avoid encoding issues. The Risk Score formula reads the leading digit, so it works either way.
+
+## License
+
+[MIT](LICENSE)
