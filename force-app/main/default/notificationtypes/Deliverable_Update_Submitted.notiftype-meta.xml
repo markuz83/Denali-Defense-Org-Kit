@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomNotificationType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customNotifTypeName>Deliverable Update Submitted</customNotifTypeName>
+    <description>Sent to the Project Manager when a supplier submits a Deliverable Update (flow Deliverable_Update_Notify_PM).</description>
+    <desktop>true</desktop>
+    <masterLabel>Deliverable Update Submitted</masterLabel>
+    <mobile>true</mobile>
+</CustomNotificationType>

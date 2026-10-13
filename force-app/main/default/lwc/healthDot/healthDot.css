@@ -1,0 +1,11 @@
+:host {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    vertical-align: middle;
+}
+
+.spacer {
+    width: var(--slds-g-sizing-5, 1rem);
+    height: var(--slds-g-sizing-5, 1rem);
+}

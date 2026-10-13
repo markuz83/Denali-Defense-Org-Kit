@@ -1,0 +1,62 @@
+<template>
+    <lightning-card title={title} icon-name="standard:approval">
+        <lightning-button-icon slot="actions" icon-name="utility:refresh" alternative-text="Refresh" title="Refresh"
+            onclick={handleRefresh}></lightning-button-icon>
+        <div class="slds-var-p-horizontal_medium">
+            <template lwc:if={isLoading}>
+                <div class="spinner-holder slds-is-relative"><lightning-spinner alternative-text="Loading" size="small"></lightning-spinner></div>
+            </template>
+            <template lwc:if={error}>
+                <p class="slds-text-color_error">{error}</p>
+            </template>
+            <template lwc:if={isEmpty}>
+                <p class="slds-text-color_weak slds-var-p-vertical_small">Nothing waiting on you.</p>
+            </template>
+            <template lwc:if={hasItems}>
+                <ul class="items slds-grid slds-grid_vertical">
+                    <template for:each={cards} for:item="card">
+                        <li key={card.key} class="item">
+                            <div class="item-head slds-grid slds-grid_align-spread">
+                                <a data-id={card.recordId} onclick={handleOpen} class="slds-text-heading_small">{card.name}</a>
+                                <template lwc:if={card.gapLabel}>
+                                    <span class="gap">{card.gapLabel}</span>
+                                </template>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak">{card.meta}</p>
+
+                            <template lwc:if={card.isOpportunity}>
+                                <dl class="facts slds-grid slds-wrap">
+                                    <template lwc:if={card.account}><div><dt>Customer</dt><dd>{card.account}</dd></div></template>
+                                    <template lwc:if={card.amount}><div><dt>Amount</dt><dd>{card.amount}</dd></div></template>
+                                    <template lwc:if={card.totalValue}><div><dt>Total value</dt><dd>{card.totalValue}</dd></div></template>
+                                    <template lwc:if={card.marginLine}><div><dt>Margin</dt><dd>{card.marginLine}</dd></div></template>
+                                    <template lwc:if={card.shortfall}><div><dt>Profit given up</dt><dd class="slds-text-color_error">{card.shortfall}</dd></div></template>
+                                    <template lwc:if={card.contractType}><div><dt>Contract type</dt><dd>{card.contractType}</dd></div></template>
+                                </dl>
+                                <template lwc:if={card.incumbent}>
+                                    <p class="slds-text-body_small slds-var-m-top_xx-small">Incumbent: {card.incumbent}</p>
+                                </template>
+                                <template lwc:if={card.rationale}>
+                                    <div class="slds-var-m-top_x-small">
+                                        <lightning-formatted-text value={card.rationale} class={card.rationaleClass}></lightning-formatted-text>
+                                        <lightning-button variant="base" label={card.toggleLabel} data-id={card.workitemId}
+                                            onclick={handleToggle}></lightning-button>
+                                    </div>
+                                </template>
+                            </template>
+
+                            <lightning-textarea label="Comment (optional)" data-id={card.workitemId} value={card.comment}
+                                onchange={handleComment} class="slds-var-m-top_x-small"></lightning-textarea>
+                            <div class="decide slds-grid slds-var-m-top_x-small">
+                                <lightning-button variant="brand" label="Approve" data-id={card.workitemId} data-record={card.recordId}
+                                    disabled={card.busy} onclick={handleApprove}></lightning-button>
+                                <lightning-button variant="destructive-text" label="Reject" data-id={card.workitemId}
+                                    data-record={card.recordId} disabled={card.busy} onclick={handleReject}></lightning-button>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reviewer_Comments_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR(ISPICKVAL(Internal_Review_Status__c, "Needs Clarification"), ISPICKVAL(Internal_Review_Status__c, "Rejected")), ISBLANK(Reviewer_Comments__c))</errorConditionFormula>
+    <errorDisplayField>Reviewer_Comments__c</errorDisplayField>
+    <errorMessage>Add Reviewer Comments when asking for clarification or rejecting.</errorMessage>
+</ValidationRule>

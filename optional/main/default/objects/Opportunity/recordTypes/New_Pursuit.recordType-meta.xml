@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Pursuit</fullName>
+    <active>true</active>
+    <businessProcess>New Pursuit</businessProcess>
+    <description>Competitive new work and recompetes.</description>
+    <label>New Pursuit</label>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>New Business</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Recompete</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

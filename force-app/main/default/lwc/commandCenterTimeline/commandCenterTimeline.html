@@ -1,0 +1,53 @@
+<template>
+    <lightning-card title={title} icon-name="standard:timeslot">
+        <div class="slds-var-p-horizontal_medium">
+            <div class="timeline-host">
+                <template lwc:if={hasItems}>
+                    <div class="legend slds-grid slds-wrap slds-grid_vertical-align-center slds-text-body_small slds-var-m-bottom_x-small">
+                        <span class="swatch slds-show_inline-block swatch-green"></span>Green
+                        <span class="swatch slds-show_inline-block swatch-yellow"></span>Yellow
+                        <span class="swatch slds-show_inline-block swatch-red"></span>Red
+                        <span class="legend-item">◆ forecast date</span>
+                        <span class="legend-item slip">- - - slip past due date</span>
+                        <span class="legend-item today">│ today</span>
+                    </div>
+                    <svg class="timeline" viewBox={viewBox} width={width} height={svgHeight}
+                        role="img" aria-label={title}>
+                        <g class="axis">
+                            <template for:each={ticks} for:item="tick">
+                                <g key={tick.key}>
+                                    <line x1={tick.x} x2={tick.x} y1="20" y2={tick.bottom} class="gridline"></line>
+                                    <text x={tick.labelX} y="14" class="tick-label">{tick.label}</text>
+                                </g>
+                            </template>
+                        </g>
+                        <template for:each={groups} for:item="group">
+                            <g key={group.key}>
+                                <text x={groupLabelX} y={group.y} class="group-label">{group.label}</text>
+                                <line x1="0" x2={chartRight} y1={group.lineY} y2={group.lineY} class="group-rule"></line>
+                            </g>
+                        </template>
+                        <template for:each={rows} for:item="row">
+                            <g key={row.key} class="row" data-id={row.id} onclick={handleRowClick}>
+                                <title>{row.tooltip}</title>
+                                <rect x="0" y={row.hitY} width={width} height="24" class="row-hit"></rect>
+                                <text x={labelX} y={row.labelY} class="row-label">{row.label}</text>
+                                <rect x={row.barX} y={row.barY} width={row.barW} height="12" rx="3" class={row.barClass}></rect>
+                                <template lwc:if={row.slips}>
+                                    <line x1={row.slipX1} x2={row.slipX2} y1={row.slipY} y2={row.slipY} class="slip-line"></line>
+                                </template>
+                                <template lwc:if={row.hasForecast}>
+                                    <polygon points={row.diamond} class={row.diamondClass}></polygon>
+                                </template>
+                            </g>
+                        </template>
+                        <line x1={todayX} x2={todayX} y1="20" y2={todayBottom} class="today-line"></line>
+                    </svg>
+                </template>
+                <template lwc:else>
+                    <p class="slds-text-color_weak slds-var-p-vertical_small">{emptyMessage}</p>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

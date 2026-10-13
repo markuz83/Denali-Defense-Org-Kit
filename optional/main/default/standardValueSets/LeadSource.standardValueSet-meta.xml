@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>SAM.gov</fullName>
+        <default>false</default>
+        <label>SAM.gov</label>
+    </standardValue>
+    <standardValue>
+        <fullName>RFI / Sources Sought</fullName>
+        <default>false</default>
+        <label>RFI / Sources Sought</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Agency Forecast</fullName>
+        <default>false</default>
+        <label>Agency Forecast</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Industry Day</fullName>
+        <default>false</default>
+        <label>Industry Day</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Partner Referral</fullName>
+        <default>false</default>
+        <label>Partner Referral</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Existing Customer</fullName>
+        <default>false</default>
+        <label>Existing Customer</label>
+    </standardValue>
+</StandardValueSet>

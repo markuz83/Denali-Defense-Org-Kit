@@ -1,0 +1,96 @@
+.spinner-holder {
+    min-height: var(--slds-g-sizing-10, 3rem);
+}
+
+.headline {
+    align-items: baseline;
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.win-rate {
+    font-size: var(--slds-g-font-scale-5, 1.75rem);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    font-variant-numeric: tabular-nums;
+}
+
+.win-bar {
+    height: var(--slds-g-sizing-3, 0.5rem);
+    border-radius: var(--slds-g-radius-border-4, 1.25rem);
+    background: var(--slds-g-color-error-container-2, #fdb6c5);
+    margin-top: var(--slds-g-spacing-1, 0.25rem);
+}
+
+.win-fill {
+    height: 100%;
+    background: var(--slds-g-color-success-1, #056764);
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.stats dt {
+    font-size: var(--slds-g-font-scale-neg-1, 0.75rem);
+    color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+.stat-value {
+    font-weight: var(--slds-g-font-weight-6, 600);
+    font-variant-numeric: tabular-nums;
+}
+
+.insight {
+    padding: var(--slds-g-spacing-2, 0.5rem) var(--slds-g-spacing-3, 0.75rem);
+    border-left: var(--slds-g-sizing-border-4, 4px) solid var(--slds-g-color-border-warning-1, #dd7a01);
+    background: var(--slds-g-color-warning-container-1, #f9e3b6);
+    border-radius: var(--slds-g-radius-border-2, 0.5rem);
+}
+
+.reason {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr auto;
+    gap: var(--slds-g-spacing-2, 0.5rem);
+    margin-bottom: var(--slds-g-spacing-1, 0.25rem);
+    font-size: var(--slds-g-font-scale-base, 0.8125rem);
+}
+
+.reason-track {
+    height: var(--slds-g-sizing-3, 0.5rem);
+    background: var(--slds-g-color-surface-container-3, #e5e5e5);
+    border-radius: var(--slds-g-radius-border-4, 1.25rem);
+}
+
+.reason-fill {
+    height: 100%;
+    background: var(--slds-g-color-error-1, #b60554);
+}
+
+.reason-detail {
+    font-variant-numeric: tabular-nums;
+    color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+.recent {
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.outcome {
+    flex: 0 0 auto;
+    font-size: var(--slds-g-font-scale-neg-1, 0.75rem);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    border-radius: var(--slds-g-radius-border-4, 1.25rem);
+    padding: var(--slds-g-sizing-1, 0.125rem) var(--slds-g-spacing-2, 0.5rem);
+    margin-top: var(--slds-g-sizing-1, 0.125rem);
+}
+
+.outcome-won {
+    background: var(--slds-g-color-success-container-1, #acf3e4);
+    color: var(--slds-g-color-on-success-1, #056764);
+}
+
+.outcome-lost {
+    background: var(--slds-g-color-error-container-1, #fddde3);
+    color: var(--slds-g-color-on-error-1, #b60554);
+}

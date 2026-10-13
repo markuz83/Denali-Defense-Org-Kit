@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <assignments>
+        <name>Set_Defaults</name>
+        <label>Set Defaults</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Project__r.Contract__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Project__r.Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Acceptance_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fxAcceptanceDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Automation inventory #3. Inherits Contract and Account from the Project, and stamps Acceptance Date the first time the deliverable is Accepted.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Today when newly Accepted with no date yet; otherwise the existing date.</description>
+        <name>fxAcceptanceDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(AND(ISPICKVAL({!$Record.Acceptance_Status__c}, &quot;Accepted&quot;), ISBLANK({!$Record.Acceptance_Date__c})), TODAY(), {!$Record.Acceptance_Date__c})</expression>
+    </formulas>
+    <interviewLabel>Deliverable Defaults {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Deliverable Defaults</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Defaults</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Project__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Deliverable__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <assignments>
+        <name>Stamp_Reviewer</name>
+        <label>Stamp Reviewer</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Reviewed_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Review_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Automation inventory #7. Stamps Reviewed By and Review Date when Internal Review Status changes to Accepted, Needs Clarification, or Rejected.</description>
+    <environments>Default</environments>
+    <interviewLabel>Deliverable Update Review Stamp {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Deliverable Update Review Stamp</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Stamp_Reviewer</targetReference>
+        </connector>
+        <filterFormula>AND(ISCHANGED({!$Record.Internal_Review_Status__c}), OR(ISPICKVAL({!$Record.Internal_Review_Status__c}, &quot;Accepted&quot;), ISPICKVAL({!$Record.Internal_Review_Status__c}, &quot;Needs Clarification&quot;), ISPICKVAL({!$Record.Internal_Review_Status__c}, &quot;Rejected&quot;)))</filterFormula>
+        <object>Deliverable_Update__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

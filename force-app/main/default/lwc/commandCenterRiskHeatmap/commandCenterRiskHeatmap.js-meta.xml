@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <isExposed>false</isExposed>
+    <masterLabel>Command Center Risk Heat Map</masterLabel>
+    <description>5x5 likelihood x consequence heat map for a list of risks. Used by the Account Command Center.</description>
+</LightningComponentBundle>

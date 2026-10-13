@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Subcontract_Share__c</fullName>
+    <description>Share of the project budget going to suppliers (Subcontracted Value / Budget).</description>
+    <formula>IF(Budget__c &gt; 0, Subcontracted_Value__c / Budget__c, NULL)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Subcontract Share %</label>
+    <precision>18</precision>
+    <scale>2</scale>
+    <type>Percent</type>
+</CustomField>

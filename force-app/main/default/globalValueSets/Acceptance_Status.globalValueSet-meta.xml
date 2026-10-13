@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Not Submitted</fullName>
+        <default>false</default>
+        <label>Not Submitted</label>
+    </customValue>
+    <customValue>
+        <fullName>Pending Review</fullName>
+        <default>false</default>
+        <label>Pending Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Accepted</fullName>
+        <default>false</default>
+        <label>Accepted</label>
+    </customValue>
+    <customValue>
+        <fullName>Conditionally Accepted</fullName>
+        <default>false</default>
+        <label>Conditionally Accepted</label>
+    </customValue>
+    <customValue>
+        <fullName>Rejected</fullName>
+        <default>false</default>
+        <label>Rejected</label>
+    </customValue>
+    <masterLabel>Acceptance Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

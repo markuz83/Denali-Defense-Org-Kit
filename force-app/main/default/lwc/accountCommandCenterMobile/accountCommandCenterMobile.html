@@ -1,0 +1,207 @@
+<template>
+    <div class="command-center">
+        <template lwc:if={showPicker}>
+            <div class="slds-var-p-horizontal_small slds-var-p-vertical_x-small">
+                <!-- A native select: the phone shows its own picker, which a page container can't clip
+                     (lightning-combobox's drop-down list gets cut off in the mobile app). -->
+                <template lwc:if={pickerReady}>
+                    <lightning-select label="Account" options={selectOptions} value={selectedValue}
+                        onchange={handleAccountPicked}></lightning-select>
+                </template>
+                <template lwc:elseif={pickerEmpty}>
+                    <p class="slds-text-color_weak">No active customer accounts.</p>
+                </template>
+            </div>
+        </template>
+
+        <template lwc:if={isLoading}>
+            <div class="spinner-holder slds-is-relative">
+                <lightning-spinner alternative-text="Loading account" size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template lwc:if={error}>
+            <div class="slds-notify slds-notify_alert slds-alert_error slds-var-m-around_small" role="alert">
+                <h2>{error}</h2>
+            </div>
+        </template>
+
+        <template lwc:if={hasData}>
+            <!-- Header -->
+            <article class="slds-card slds-var-m-top_x-small">
+                <div class="slds-card__body slds-card__body_inner">
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start header">
+                        <div class="slds-col">
+                            <h2 class="slds-text-heading_medium">{account.Name}</h2>
+                            <p class="slds-text-body_small slds-text-color_weak">{subtitle}</p>
+                        </div>
+                        <lightning-button-icon icon-name="utility:refresh" alternative-text="Refresh" title="Refresh"
+                            onclick={handleRefresh}></lightning-button-icon>
+                    </div>
+                    <lightning-badge label={healthLabel} class={healthBadgeClass}></lightning-badge>
+                    <!-- Two per row, text only: a third of a phone's width wraps the labels at larger text sizes. -->
+                    <div class="actions slds-var-m-top_small">
+                        <lightning-button label="New Risk" class="action" stretch onclick={handleNewRisk}></lightning-button>
+                        <lightning-button label="New Case" class="action" stretch onclick={handleNewCase}></lightning-button>
+                        <lightning-button label="Go to Account" class="action action_wide" stretch onclick={handleOpenAccount}></lightning-button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- KPIs -->
+            <div class="kpis slds-var-m-top_x-small slds-var-p-horizontal_small">
+                <template for:each={kpis} for:item="kpi">
+                    <div key={kpi.key} class={kpi.className}>
+                        <div class="kpi-label">{kpi.label}</div>
+                        <div class="kpi-value">{kpi.value}</div>
+                        <div class="kpi-sub">{kpi.sub}</div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Sections -->
+            <article class="slds-card slds-var-m-top_small">
+                <lightning-accordion allow-multiple-sections-open active-section-name={openSections}>
+                    <lightning-accordion-section name="attention" label={attentionLabel}>
+                        <template lwc:if={hasAttention}>
+                            <ul class="rows">
+                                <template for:each={attentionItems} for:item="d">
+                                    <li key={d.id} class="row">
+                                        <div class="slds-grid slds-grid_vertical-align-start row-line">
+                                            <c-health-dot value={d.health} class="row-dot"></c-health-dot>
+                                            <div class="slds-col">
+                                                <a href={d.url} data-id={d.id} onclick={handleOpen} class="row-title">{d.name}</a>
+                                                <p class="slds-text-body_small slds-text-color_weak">{d.project} · {d.status}</p>
+                                                <p class="slds-text-body_small"><span class={d.dueClass}>{d.due}</span><template lwc:if={d.revenue}> · {d.revenue}</template></p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template lwc:else>
+                            <p class="slds-text-color_weak">Nothing at risk or overdue.</p>
+                        </template>
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="contracts" label={contractsLabel}>
+                        <template lwc:if={hasContracts}>
+                            <template for:each={contractCards} for:item="c">
+                                <div key={c.id} class="contract">
+                                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center contract-head">
+                                        <a href={c.url} data-id={c.id} onclick={handleOpen} class="slds-text-heading_small">{c.title}</a>
+                                        <lightning-badge label={c.status} class={c.statusClass}></lightning-badge>
+                                    </div>
+                                    <p class="slds-text-body_small slds-text-color_weak">{c.subtitle}</p>
+                                    <div class="contract-value">{c.value}</div>
+                                    <div class="funding-bar slds-grid slds-scrollable_none">
+                                        <span class="seg slds-show seg-recognized" style={c.recognizedStyle}></span>
+                                        <span class="seg slds-show seg-funded" style={c.fundedStyle}></span>
+                                    </div>
+                                    <div class="funding-legend slds-grid slds-wrap slds-text-body_small">
+                                        <span><span class="dot slds-show_inline-block dot-recognized"></span>Recognized {c.recognized}</span>
+                                        <span><span class="dot slds-show_inline-block dot-funded"></span>Funded {c.fundedOpen}</span>
+                                        <span><span class="dot slds-show_inline-block dot-unfunded"></span>Unfunded {c.unfunded}</span>
+                                    </div>
+                                    <template lwc:if={c.hasMargin}>
+                                        <p class="slds-text-body_small slds-var-m-bottom_x-small">{c.marginText}<span class={c.varianceClass}>{c.varianceText}</span></p>
+                                    </template>
+                                    <template lwc:if={c.optionLabel}>
+                                        <lightning-badge label={c.optionLabel} class={c.optionClass}></lightning-badge>
+                                    </template>
+                                </div>
+                            </template>
+                        </template>
+                        <template lwc:else>
+                            <p class="slds-text-color_weak">No contracts on this account yet.</p>
+                        </template>
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="projects" label={projectsLabel}>
+                        <template lwc:if={hasProjects}>
+                            <ul class="rows">
+                                <template for:each={projectItems} for:item="p">
+                                    <li key={p.id} class="row">
+                                        <div class="slds-grid slds-grid_vertical-align-start row-line">
+                                            <c-health-dot value={p.health} class="row-dot"></c-health-dot>
+                                            <div class="slds-col">
+                                                <a href={p.url} data-id={p.id} onclick={handleOpen} class="row-title">{p.name}</a>
+                                                <p class="slds-text-body_small slds-text-color_weak">{p.detail}</p>
+                                                <template lwc:if={p.atRisk}>
+                                                    <p class="slds-text-body_small slds-text-color_error">{p.atRisk}</p>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template lwc:else>
+                            <p class="slds-text-color_weak">No projects on this account yet.</p>
+                        </template>
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="risks" label={risksLabel}>
+                        <template lwc:if={hasRisks}>
+                            <ul class="rows">
+                                <template for:each={riskItems} for:item="r">
+                                    <li key={r.id} class="row">
+                                        <div class="slds-grid slds-grid_vertical-align-start row-line">
+                                            <span class={r.scoreClass} title="Risk score">{r.score}</span>
+                                            <div class="slds-col">
+                                                <a href={r.url} data-id={r.id} onclick={handleOpen} class="row-title">{r.name}</a>
+                                                <p class="slds-text-body_small slds-text-color_weak">{r.detail}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template lwc:else>
+                            <p class="slds-text-color_weak">No open risks.</p>
+                        </template>
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="service" label={serviceLabel}>
+                        <template lwc:if={hasService}>
+                            <template lwc:if={hasEngagements}>
+                                <ul class="rows">
+                                    <template for:each={serviceItems} for:item="s">
+                                        <li key={s.id} class="row">
+                                            <div class="slds-grid slds-grid_vertical-align-start row-line">
+                                                <c-health-dot value={s.health} class="row-dot"></c-health-dot>
+                                                <div class="slds-col">
+                                                    <a href={s.url} data-id={s.id} onclick={handleOpen} class="row-title">{s.name}</a>
+                                                    <p class="slds-text-body_small slds-text-color_weak">{s.detail}</p>
+                                                    <p class="sla slds-grid slds-grid_vertical-align-center slds-text-body_small">
+                                                        <lightning-dynamic-icon type="score" option={s.slaOption} alternative-text={s.slaLabel}></lightning-dynamic-icon>
+                                                        <span aria-hidden="true">{s.slaLabel}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+                            <template lwc:if={hasCases}>
+                                <h3 class="slds-text-title_caps slds-var-m-top_small">Open Cases</h3>
+                                <ul class="rows">
+                                    <template for:each={caseItems} for:item="c">
+                                        <li key={c.id} class="row">
+                                            <a href={c.url} data-id={c.id} onclick={handleOpen} class="row-title">{c.name}</a>
+                                            <p class="slds-text-body_small"><span class={c.severityClass}>{c.severity}</span></p>
+                                            <p class="slds-text-body_small slds-text-color_weak">{c.detail}</p>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+                        </template>
+                        <template lwc:else>
+                            <p class="slds-text-color_weak">No service engagements or open cases.</p>
+                        </template>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </article>
+        </template>
+    </div>
+</template>

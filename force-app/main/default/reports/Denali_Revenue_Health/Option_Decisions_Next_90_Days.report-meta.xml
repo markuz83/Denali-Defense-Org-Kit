@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Contract$Account</field>
+    </columns>
+    <columns>
+        <field>Contract$Next_Option_Date__c</field>
+    </columns>
+    <columns>
+        <field>Contract$Current_Period__c</field>
+    </columns>
+    <columns>
+        <field>Contract$Program_Manager__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Contract$Contract_Value__c</field>
+    </columns>
+    <description>Activated contracts whose next option must be exercised in the next 90 days. A missed option is revenue walking out the door; Flow #12 reminds the Program Manager 60 days out.</description>
+    <filter>
+        <criteriaItems>
+            <column>Contract$Status</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Activated</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Contract$Award_Number__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Option Decisions Next 90 Days</name>
+    <reportType>Denali_Contract_Backlog__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Contract$Next_Option_Date__c</dateColumn>
+        <interval>INTERVAL_NEXT90</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,113 @@
+.spinner-holder {
+    min-height: var(--slds-g-sizing-10, 3rem);
+}
+
+.spark {
+    width: 100%;
+    max-width: var(--slds-g-sizing-15, 20rem);
+    height: var(--slds-g-sizing-10, 3rem);
+}
+
+.updates {
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.update {
+    border: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-border-1, #c9c9c9);
+    border-radius: var(--slds-g-radius-border-2, 0.5rem);
+    padding: var(--slds-g-spacing-3, 0.75rem);
+}
+
+.update-open {
+    border-left: var(--slds-g-sizing-border-4, 4px) solid var(--slds-g-color-border-warning-1, #dd7a01);
+}
+
+.update-head {
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.reported {
+    gap: var(--slds-g-spacing-1, 0.25rem) var(--slds-g-spacing-3, 0.75rem);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    margin: var(--slds-g-spacing-1, 0.25rem) 0;
+}
+
+.block {
+    white-space: pre-line;
+}
+
+.status {
+    font-size: var(--slds-g-font-scale-neg-1, 0.75rem);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    border-radius: var(--slds-g-radius-border-4, 1.25rem);
+    padding: var(--slds-g-sizing-1, 0.125rem) var(--slds-g-spacing-2, 0.5rem);
+    background: var(--slds-g-color-surface-container-2, #f3f3f3);
+}
+
+.status-pending {
+    background: var(--slds-g-color-warning-container-1, #f9e3b6);
+    color: var(--slds-g-color-on-warning-1, #8c4b02);
+}
+
+.status-accepted {
+    background: var(--slds-g-color-success-container-1, #acf3e4);
+    color: var(--slds-g-color-on-success-1, #056764);
+}
+
+.status-bounced {
+    background: var(--slds-g-color-info-container-1, #d8e6fe);
+    color: var(--slds-g-color-on-info-1, #0b5cab);
+}
+
+.status-rejected {
+    background: var(--slds-g-color-error-container-1, #fddde3);
+    color: var(--slds-g-color-on-error-1, #b60554);
+}
+
+.health {
+    font-weight: var(--slds-g-font-weight-4, 400);
+    font-size: var(--slds-g-font-scale-base, 0.8125rem);
+}
+
+.health-green {
+    color: var(--slds-g-color-success-1, #056764);
+}
+
+.health-yellow {
+    color: var(--slds-g-color-warning-1, #8c4b02);
+}
+
+.health-red {
+    color: var(--slds-g-color-error-1, #b60554);
+}
+
+.decide {
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.live {
+    font-size: var(--slds-g-font-scale-neg-1, 0.75rem);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    color: var(--slds-g-color-success-1, #056764);
+    margin-right: var(--slds-g-spacing-2, 0.5rem);
+    white-space: nowrap;
+}
+
+/* Trend sparkline: accent while progressing, error when stalled */
+.spark-line {
+    fill: none;
+    stroke: var(--slds-g-color-accent-1, #066afe);
+    stroke-width: var(--slds-g-sizing-border-2, 2px);
+}
+
+.spark-dot {
+    fill: var(--slds-g-color-accent-1, #066afe);
+}
+
+.spark-line.spark-stalled {
+    stroke: var(--slds-g-color-error-1, #b60554);
+}
+
+.spark-dot.spark-stalled {
+    fill: var(--slds-g-color-error-1, #b60554);
+}

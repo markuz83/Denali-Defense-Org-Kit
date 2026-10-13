@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SLA_Breached__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Checked when at least one of the case's SLA milestones is violated (open or completed late). Set hourly by the SlaBreachRollup scheduled job, which also counts SLA Breaches on the Service Engagement. Milestones violate as time passes, so a save-time formula or flow can't set this.</description>
+    <inlineHelpText>At least one SLA milestone on this case was missed. Updated hourly.</inlineHelpText>
+    <label>SLA Breached</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

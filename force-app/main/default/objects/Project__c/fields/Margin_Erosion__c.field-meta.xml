@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Margin_Erosion__c</fullName>
+    <description>Forecast Margin minus Bid Margin, in percentage points. Negative means margin is sliding.</description>
+    <formula>IF(OR(ISBLANK(Forecast_Margin__c), ISBLANK(Bid_Margin__c)), NULL, Forecast_Margin__c - Bid_Margin__c)</formula>
+    <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+    <inlineHelpText>Forecast Margin minus Bid Margin (percentage points). Negative = the project is earning less than it was priced to.</inlineHelpText>
+    <label>Margin Erosion %</label>
+    <precision>18</precision>
+    <scale>2</scale>
+    <type>Percent</type>
+</CustomField>

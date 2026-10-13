@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contract Growth</fullName>
+    <description>Task orders, modifications and option exercises under an existing contract: no shaping or bid decision.</description>
+    <isActive>true</isActive>
+    <values>
+        <fullName>Identified</fullName>
+    </values>
+    <values>
+        <fullName>Proposal Development</fullName>
+    </values>
+    <values>
+        <fullName>Proposal Submitted</fullName>
+    </values>
+    <values>
+        <fullName>Discussions / Negotiation</fullName>
+    </values>
+    <values>
+        <fullName>Closed Won</fullName>
+    </values>
+    <values>
+        <fullName>Closed Lost</fullName>
+    </values>
+    <values>
+        <fullName>No Bid</fullName>
+    </values>
+</BusinessProcess>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Competitive</fullName>
+        <default>false</default>
+        <label>Competitive</label>
+    </customValue>
+    <customValue>
+        <fullName>Sole Source</fullName>
+        <default>false</default>
+        <label>Sole Source</label>
+    </customValue>
+    <customValue>
+        <fullName>Follow-On</fullName>
+        <default>false</default>
+        <label>Follow-On</label>
+    </customValue>
+    <customValue>
+        <fullName>OTA</fullName>
+        <default>false</default>
+        <label>OTA</label>
+    </customValue>
+    <masterLabel>Acquisition Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

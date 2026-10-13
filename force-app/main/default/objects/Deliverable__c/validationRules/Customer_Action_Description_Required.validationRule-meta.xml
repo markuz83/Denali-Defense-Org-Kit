@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Action_Description_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Requires_Customer_Action__c, ISBLANK(Customer_Action_Description__c))</errorConditionFormula>
+    <errorDisplayField>Customer_Action_Description__c</errorDisplayField>
+    <errorMessage>Describe the customer action required.</errorMessage>
+</ValidationRule>

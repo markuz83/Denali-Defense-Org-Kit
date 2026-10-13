@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Allocation_Range</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(Allocation__c &lt; 0, Allocation__c &gt; 1)</errorConditionFormula>
+    <errorDisplayField>Allocation__c</errorDisplayField>
+    <errorMessage>Allocation must be between 0% and 100%.</errorMessage>
+</ValidationRule>

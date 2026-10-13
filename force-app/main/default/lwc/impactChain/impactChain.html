@@ -1,0 +1,45 @@
+<template>
+    <lightning-card title="Impact Chain" icon-name="standard:hierarchy">
+        <div class="slds-var-p-horizontal_medium">
+            <template lwc:if={isLoading}>
+                <div class="spinner-holder slds-is-relative"><lightning-spinner alternative-text="Loading" size="small"></lightning-spinner></div>
+            </template>
+            <template lwc:if={error}>
+                <p class="slds-text-color_error">{error}</p>
+            </template>
+            <template lwc:if={noUpstream}>
+                <p class="slds-text-color_weak">This case isn't linked to a Deliverable, Project or Service Engagement with a contract. Link one to see what it puts at risk.</p>
+            </template>
+
+            <template lwc:if={hasUpstream}>
+                <p class={headlineClass}>{headline}</p>
+                <ol class="chain slds-is-relative slds-var-m-top_small">
+                    <template for:each={nodes} for:item="n">
+                        <li key={n.key} class={n.nodeClass}>
+                            <span class={n.dotClass}></span>
+                            <div class="node-body slds-no-space">
+                                <div class="kind">{n.kind}</div>
+                                <a data-id={n.id} onclick={handleOpen} class="node-name">{n.name}</a>
+                                <template for:each={n.lines} for:item="line">
+                                    <div key={line.key} class="slds-text-body_small slds-text-color_weak">{line.text}</div>
+                                </template>
+                            </div>
+                        </li>
+                    </template>
+                </ol>
+
+                <template lwc:if={hasRisks}>
+                    <h3 class="slds-text-title_caps slds-var-m-top_medium slds-var-m-bottom_xx-small">Open risks</h3>
+                    <ul class="slds-has-dividers_top-space">
+                        <template for:each={risks} for:item="r">
+                            <li key={r.id} class="slds-item">
+                                <a data-id={r.id} onclick={handleOpen}>{r.name}</a>
+                                <div class="slds-text-body_small slds-text-color_weak">{r.meta}</div>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

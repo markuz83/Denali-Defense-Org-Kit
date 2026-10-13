@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Supplier__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Supplier</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.Is_Supplier__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Deliverables (Supplier)</relationshipLabel>
+    <relationshipName>Deliverables_Supplier</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_Margin__c</fullName>
+    <description>Forecast margin at completion across the contract&apos;s projects. Was (Revenue Recognized - Actual Cost) / Revenue Recognized, which swings wildly early in a contract because revenue is only recognized at milestone acceptance while cost accrues every month.</description>
+    <formula>IF(Revenue_Allocation__c &gt; 0, (Revenue_Allocation__c - Forecast_Cost__c) / Revenue_Allocation__c, NULL)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>(Revenue Allocation - Forecast Cost) / Revenue Allocation, summed across the contract&apos;s projects. Compare with Original Margin % to see erosion.</inlineHelpText>
+    <label>Current Margin %</label>
+    <precision>18</precision>
+    <scale>2</scale>
+    <type>Percent</type>
+</CustomField>

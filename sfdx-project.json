@@ -1,0 +1,29 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true
+    },
+    {
+      "path": "optional"
+    },
+    {
+      "path": "ai"
+    },
+    {
+      "path": "persona-apps"
+    },
+    {
+      "path": "dlrs"
+    },
+    {
+      "path": "agentforce"
+    },
+    {
+      "path": "account-plans"
+    }
+  ],
+  "name": "demo-org-restore",
+  "namespace": "",
+  "sourceApiVersion": "64.0"
+}

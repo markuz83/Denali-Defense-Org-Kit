@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expected_End_After_Start</fullName>
+    <active>true</active>
+    <errorConditionFormula>Expected_Contract_End__c &lt; Expected_Contract_Start__c</errorConditionFormula>
+    <errorDisplayField>Expected_Contract_End__c</errorDisplayField>
+    <errorMessage>Expected Contract End must be on or after Expected Contract Start.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Role_Summary__c</fullName>
+    <description>Account Role as plain text (e.g. "Supplier, Partner"), for places that can't show a multi-select picklist, such as the Denali Account compact layout (record header).</description>
+    <externalId>false</externalId>
+    <formula>SUBSTITUTE(TRIM(
+  IF(INCLUDES(Account_Role__c, &quot;Customer&quot;), &quot;Customer &quot;, &quot;&quot;) &amp;
+  IF(INCLUDES(Account_Role__c, &quot;Supplier&quot;), &quot;Supplier &quot;, &quot;&quot;) &amp;
+  IF(INCLUDES(Account_Role__c, &quot;Partner&quot;), &quot;Partner &quot;, &quot;&quot;) &amp;
+  IF(INCLUDES(Account_Role__c, &quot;Competitor&quot;), &quot;Competitor&quot;, &quot;&quot;)
+), &quot; &quot;, &quot;, &quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Roles</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

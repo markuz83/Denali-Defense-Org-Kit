@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>Denali_Portfolio</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>Denali_Delivery</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>Denali_Portfolio_Mobile</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>Denali_Delivery_Mobile</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <description>Access to the Denali persona apps: Denali Portfolio (General Managers) and Denali Delivery (Project Managers) on desktop, and their phone-only Mobile apps. Pair with Demo Data Model Access for the objects, fields, tabs and Apex.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Denali Persona Apps</label>
+    <tabSettings>
+        <tab>Denali_Delivery_Mobile_Home</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Denali_Portfolio_Mobile_Command_Center</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Denali_Portfolio_Mobile_Home</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

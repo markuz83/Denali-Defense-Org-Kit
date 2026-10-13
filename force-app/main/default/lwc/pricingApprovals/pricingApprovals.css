@@ -1,0 +1,55 @@
+.spinner-holder {
+    min-height: var(--slds-g-sizing-10, 3rem);
+}
+
+.items {
+    gap: var(--slds-g-spacing-3, 0.75rem);
+}
+
+.item {
+    border: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-border-1, #c9c9c9);
+    border-left: var(--slds-g-sizing-border-4, 4px) solid var(--slds-g-color-border-warning-1, #dd7a01);
+    border-radius: var(--slds-g-radius-border-2, 0.5rem);
+    padding: var(--slds-g-spacing-3, 0.75rem);
+}
+
+.item-head {
+    align-items: baseline;
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.gap {
+    font-weight: var(--slds-g-font-weight-6, 600);
+    color: var(--slds-g-color-error-1, #b60554);
+    white-space: nowrap;
+}
+
+.facts {
+    gap: var(--slds-g-spacing-1, 0.25rem) var(--slds-g-spacing-5, 1.5rem);
+    margin-top: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.facts dt {
+    font-size: var(--slds-g-font-scale-neg-1, 0.75rem);
+    color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+.facts dd {
+    font-weight: var(--slds-g-font-weight-6, 600);
+    font-variant-numeric: tabular-nums;
+}
+
+.rationale {
+    display: block;
+    white-space: pre-line;
+    font-size: var(--slds-g-font-scale-base, 0.8125rem);
+}
+
+.rationale-collapsed {
+    max-height: 3.9em;
+    overflow: hidden;
+}
+
+.decide {
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}

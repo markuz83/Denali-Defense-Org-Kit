@@ -1,0 +1,71 @@
+<template>
+    <lightning-card title="Contract Health" icon-name="standard:contract">
+        <div class="slds-var-p-horizontal_medium">
+            <template lwc:if={isLoading}>
+                <div class="spinner-holder slds-is-relative"><lightning-spinner alternative-text="Loading" size="small"></lightning-spinner></div>
+            </template>
+            <template lwc:if={error}>
+                <p class="slds-text-color_error">{error}</p>
+            </template>
+
+            <template lwc:if={h}>
+                <!-- Funding -->
+                <div class="value">{valueLabel} <span class="slds-text-body_small slds-text-color_weak">contract value</span></div>
+                <div class="funding-bar slds-grid slds-scrollable_none" title="Recognized / funded, not yet recognized / unfunded">
+                    <span class="seg slds-show seg-recognized" style={recognizedStyle}></span>
+                    <span class="seg slds-show seg-funded" style={fundedStyle}></span>
+                </div>
+                <div class="funding-legend slds-grid slds-wrap slds-text-body_small">
+                    <span><span class="key slds-show_inline-block key-recognized"></span>Recognized {recognizedLabel}</span>
+                    <span><span class="key slds-show_inline-block key-funded"></span>Funded {fundedLabel}</span>
+                    <span><span class="key slds-show_inline-block key-unfunded"></span>Unfunded {unfundedLabel}</span>
+                </div>
+
+                <!-- Margin + option -->
+                <div class="pair slds-grid slds-wrap slds-var-m-top_small">
+                    <template lwc:if={hasMargin}>
+                        <div class="margin">
+                            <div class="slds-text-body_small slds-text-color_weak">Margin at award → forecast</div>
+                            <div class="margin-values">{originalMargin} → {currentMargin} <span class={varianceClass}>{varianceLabel}</span></div>
+                        </div>
+                    </template>
+                    <template lwc:if={option}>
+                        <div class={option.className}>
+                            <div class="option-label">{option.label}</div>
+                            <div class="slds-text-body_small">{option.sub}</div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Underneath -->
+                <div class="tiles slds-var-m-top_small">
+                    <template for:each={tiles} for:item="t">
+                        <div key={t.key} class={t.className}>
+                            <div class="tile-label">{t.label}</div>
+                            <div class="tile-value">{t.value}</div>
+                        </div>
+                    </template>
+                </div>
+
+                <template lwc:if={hasProjects}>
+                    <h3 class="slds-text-title_caps slds-var-m-top_medium slds-var-m-bottom_xx-small">Projects</h3>
+                    <ul class="slds-has-dividers_top-space">
+                        <template for:each={projects} for:item="p">
+                            <li key={p.id} class="slds-item project slds-grid slds-grid_vertical-align-start">
+                                <c-health-dot value={p.health} size="xx-small" class="health"></c-health-dot>
+                                <div class="project-main">
+                                    <a data-id={p.id} onclick={handleOpen}>{p.name}</a>
+                                    <div class="slds-text-body_small slds-text-color_weak">{p.meta}</div>
+                                </div>
+                                <div class="project-margin slds-text-align_right slds-text-body_small">
+                                    {p.margin}
+                                    <div class={p.erosionClass}>{p.erosion}</div>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

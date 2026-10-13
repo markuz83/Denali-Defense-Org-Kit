@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Severity__c</fullName>
+    <label>Severity</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sev 1 - Critical Outage</fullName>
+                <default>false</default>
+                <label>Sev 1 - Critical Outage</label>
+            </value>
+            <value>
+                <fullName>Sev 2 - Major Degradation</fullName>
+                <default>false</default>
+                <label>Sev 2 - Major Degradation</label>
+            </value>
+            <value>
+                <fullName>Sev 3 - Minor Issue</fullName>
+                <default>false</default>
+                <label>Sev 3 - Minor Issue</label>
+            </value>
+            <value>
+                <fullName>Sev 4 - Informational / Request</fullName>
+                <default>false</default>
+                <label>Sev 4 - Informational / Request</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

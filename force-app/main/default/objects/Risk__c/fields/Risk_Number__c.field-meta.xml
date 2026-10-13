@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Risk_Number__c</fullName>
+    <displayFormat>RSK-{00000}</displayFormat>
+    <externalId>false</externalId>
+    <label>Risk Number</label>
+    <type>AutoNumber</type>
+</CustomField>

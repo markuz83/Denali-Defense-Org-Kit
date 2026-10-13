@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Supplier_Manager__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Supplier Manager</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Contact.AccountId</field>
+            <operation>equals</operation>
+            <valueField>$Source.Supplier__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Supplier Assignments</relationshipLabel>
+    <relationshipName>Supplier_Assignments</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Below_Margin_Floor__c</fullName>
+    <description>TRUE when Estimated Margin is set and below the Margin Floor for the contract type. Drives the Margin Exception approval process.</description>
+    <formula>AND(NOT(ISBLANK(Estimated_Margin__c)), Estimated_Margin__c &lt; Margin_Floor__c)</formula>
+    <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+    <label>Below Margin Floor</label>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deliverable__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Deliverable</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Deliverable__c.Project__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.Project__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Deliverable__c</referenceTo>
+    <relationshipLabel>Cases</relationshipLabel>
+    <relationshipName>Cases</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

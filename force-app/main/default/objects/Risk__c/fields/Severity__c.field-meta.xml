@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Severity__c</fullName>
+    <formula>IF(ISBLANK(TEXT(Likelihood__c)) || ISBLANK(TEXT(Consequence__c)), "", IF(Risk_Score__c &gt;= 15, "Critical", IF(Risk_Score__c &gt;= 10, "High", IF(Risk_Score__c &gt;= 5, "Medium", "Low"))))</formula>
+    <label>Severity</label>
+    <type>Text</type>
+</CustomField>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>My Projects app page, the first tab of the Denali Delivery Mobile app.</description>
+    <flexiPage>Denali_Delivery_Mobile_Home</flexiPage>
+    <label>My Projects</label>
+    <motif>Custom48: Radar</motif>
+</CustomTab>

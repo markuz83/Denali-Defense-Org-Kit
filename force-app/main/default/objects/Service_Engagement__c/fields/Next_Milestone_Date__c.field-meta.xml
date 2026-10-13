@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Next_Milestone_Date__c</fullName>
+    <label>Next Milestone Date</label>
+    <summarizedField>Engagement_Milestone__c.Due_Date__c</summarizedField>
+    <summaryFilterItems>
+        <field>Engagement_Milestone__c.Status__c</field>
+        <operation>notEqual</operation>
+        <value>Complete, Cancelled</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Engagement_Milestone__c.Service_Engagement__c</summaryForeignKey>
+    <summaryOperation>min</summaryOperation>
+    <type>Summary</type>
+</CustomField>

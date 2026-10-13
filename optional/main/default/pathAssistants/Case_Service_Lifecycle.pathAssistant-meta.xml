@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Case</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>Case Service Lifecycle</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>Severity__c</fieldNames>
+        <fieldNames>Customer_Impact__c</fieldNames>
+        <fieldNames>Service_Engagement__c</fieldNames>
+        <fieldNames>Deliverable__c</fieldNames>
+        <info>&lt;p&gt;Triage: set Severity and Customer Impact. Together they set Priority, and Priority sets the SLA.&lt;/p&gt;&lt;p&gt;Link the Service Engagement so the case picks up its entitlement, and the Deliverable if delivery work is affected.&lt;/p&gt;&lt;p&gt;First response is due in 1 hour for Critical, 4 for High, 8 for Medium and 24 for Low. Moving to Working completes it.&lt;/p&gt;</info>
+        <picklistValueName>New</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Priority</fieldNames>
+        <fieldNames>IsEscalated</fieldNames>
+        <fieldNames>Escalation_Reason__c</fieldNames>
+        <info>&lt;p&gt;The Milestones panel shows the time left to resolve. Sev 1 and Sev 2 cases on a Deliverable open a Risk automatically.&lt;/p&gt;&lt;p&gt;Escalate with a reason as soon as the resolution time is at risk, not after it is breached.&lt;/p&gt;</info>
+        <picklistValueName>Working</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>ContactId</fieldNames>
+        <info>&lt;p&gt;Log what you need from the customer in the feed. The SLA clock stops while the case waits on them, and restarts when it moves on.&lt;/p&gt;</info>
+        <picklistValueName>Waiting on Customer</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Deliverable__c</fieldNames>
+        <info>&lt;p&gt;The SLA clock keeps running: a supplier's delay still counts against Denali's SLA.&lt;/p&gt;&lt;p&gt;Chase the supplier through the Deliverable's supplier updates.&lt;/p&gt;</info>
+        <picklistValueName>Waiting on Supplier</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Type</fieldNames>
+        <fieldNames>Root_Cause__c</fieldNames>
+        <fieldNames>Resolution_Summary__c</fieldNames>
+        <info>&lt;p&gt;Confirm the fix with the customer before closing.&lt;/p&gt;&lt;p&gt;Closing needs a Resolution Summary, and a Root Cause for an Incident or Problem.&lt;/p&gt;</info>
+        <picklistValueName>Resolved</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Resolution_Summary__c</fieldNames>
+        <info>&lt;p&gt;Closing completes any open milestones. Attach the Knowledge article you used, or write one so the next case is faster.&lt;/p&gt;</info>
+        <picklistValueName>Closed</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>__MASTER__</recordTypeName>
+</PathAssistant>

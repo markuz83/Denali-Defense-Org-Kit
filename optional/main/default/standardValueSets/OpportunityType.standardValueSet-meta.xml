@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>New Business</fullName>
+        <default>false</default>
+        <label>New Business</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Recompete</fullName>
+        <default>false</default>
+        <label>Recompete</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Task Order</fullName>
+        <default>false</default>
+        <label>Task Order</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Option Exercise</fullName>
+        <default>false</default>
+        <label>Option Exercise</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contract Modification</fullName>
+        <default>false</default>
+        <label>Contract Modification</label>
+    </standardValue>
+</StandardValueSet>

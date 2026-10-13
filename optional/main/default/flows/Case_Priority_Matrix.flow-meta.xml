@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <assignments>
+        <name>Set_Priority</name>
+        <label>Set Priority</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fxPriority</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Automation inventory #9 (optional). Sets Priority from Severity x Customer Impact when a Case is created or either field changes, so Priority can drive entitlement milestone times.
+Matrix (Single User / Multiple Users / Site or Program / Enterprise or Mission):
+Sev 1: High / Critical / Critical / Critical
+Sev 2: Medium / High / High / Critical
+Sev 3: Low / Medium / Medium / High
+Sev 4: Low / Low / Low / Medium</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>fxPriority</name>
+        <dataType>String</dataType>
+        <expression>CASE(LEFT(TEXT({!$Record.Severity__c}), 5),
+  &quot;Sev 1&quot;, IF(ISPICKVAL({!$Record.Customer_Impact__c}, &quot;Single User&quot;), &quot;High&quot;, &quot;Critical&quot;),
+  &quot;Sev 2&quot;, CASE(TEXT({!$Record.Customer_Impact__c}), &quot;Single User&quot;, &quot;Medium&quot;, &quot;Enterprise / Mission&quot;, &quot;Critical&quot;, &quot;High&quot;),
+  &quot;Sev 3&quot;, CASE(TEXT({!$Record.Customer_Impact__c}), &quot;Single User&quot;, &quot;Low&quot;, &quot;Enterprise / Mission&quot;, &quot;High&quot;, &quot;Medium&quot;),
+  &quot;Sev 4&quot;, IF(ISPICKVAL({!$Record.Customer_Impact__c}, &quot;Enterprise / Mission&quot;), &quot;Medium&quot;, &quot;Low&quot;),
+  TEXT({!$Record.Priority}))</expression>
+    </formulas>
+    <interviewLabel>Case Priority Matrix {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Priority Matrix</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Priority</targetReference>
+        </connector>
+        <filterFormula>AND(NOT(ISBLANK(TEXT({!$Record.Severity__c}))), NOT(ISBLANK(TEXT({!$Record.Customer_Impact__c}))), OR(ISNEW(), ISCHANGED({!$Record.Severity__c}), ISCHANGED({!$Record.Customer_Impact__c})))</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

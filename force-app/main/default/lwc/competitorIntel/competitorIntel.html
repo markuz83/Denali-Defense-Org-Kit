@@ -1,0 +1,69 @@
+<template>
+    <lightning-card title={title} icon-name="standard:competitor">
+        <div class="slds-var-p-horizontal_medium">
+            <template lwc:if={isLoading}>
+                <div class="spinner-holder slds-is-relative"><lightning-spinner alternative-text="Loading" size="small"></lightning-spinner></div>
+            </template>
+            <template lwc:if={error}>
+                <p class="slds-text-color_error">{error}</p>
+            </template>
+            <template lwc:if={noCompetitor}>
+                <p class="slds-text-color_weak">No incumbent competitor on this record. Set the Incumbent to see our record against them.</p>
+            </template>
+
+            <template lwc:if={intel}>
+                <template lwc:if={hasHistory}>
+                    <div class="headline slds-grid">
+                        <span class="win-rate">{winRateLabel}</span>
+                        <span class="slds-text-color_weak">win rate · {recordLine}</span>
+                    </div>
+                    <div class="win-bar slds-scrollable_none" role="img" aria-label={recordLine}>
+                        <div class="win-fill" style={winBarStyle}></div>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <p class="slds-text-color_weak">No closed head-to-head deals in the last three years.</p>
+                </template>
+
+                <dl class="stats slds-var-m-top_small">
+                    <template for:each={stats} for:item="s">
+                        <div key={s.key}>
+                            <dt>{s.label}</dt>
+                            <dd class={s.className}>{s.value}</dd>
+                        </div>
+                    </template>
+                </dl>
+
+                <template lwc:if={marginInsight}>
+                    <div class="insight slds-var-m-top_small">{marginInsight}</div>
+                </template>
+
+                <template lwc:if={hasReasons}>
+                    <h3 class="slds-text-title_caps slds-var-m-top_medium slds-var-m-bottom_xx-small">Why we lose to them</h3>
+                    <template for:each={reasons} for:item="r">
+                        <div key={r.key} class="reason slds-grid_vertical-align-center">
+                            <span class="reason-label">{r.label}</span>
+                            <span class="reason-track slds-scrollable_none"><span class="reason-fill slds-show" style={r.style}></span></span>
+                            <span class="reason-detail">{r.detail}</span>
+                        </div>
+                    </template>
+                </template>
+
+                <template lwc:if={hasHistory}>
+                    <h3 class="slds-text-title_caps slds-var-m-top_medium slds-var-m-bottom_xx-small">Recent head to head</h3>
+                    <ul class="slds-has-dividers_top-space">
+                        <template for:each={recent} for:item="h">
+                            <li key={h.id} class="slds-item recent slds-grid slds-grid_vertical-align-start">
+                                <span class={h.outcomeClass}>{h.outcome}</span>
+                                <div>
+                                    <a data-id={h.id} onclick={handleOpen}>{h.name}</a>
+                                    <div class="slds-text-body_small slds-text-color_weak">{h.meta}</div>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

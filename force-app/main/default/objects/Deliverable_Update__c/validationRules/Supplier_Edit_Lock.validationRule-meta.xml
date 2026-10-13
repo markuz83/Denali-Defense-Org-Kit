@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Supplier_Edit_Lock</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(NOT(ISNEW()), NOT(ISBLANK($User.ContactId)), NOT(ISPICKVAL(PRIORVALUE(Internal_Review_Status__c), "Pending")))</errorConditionFormula>
+    <errorMessage>This update is under review and can't be edited. Submit a new update instead.</errorMessage>
+</ValidationRule>

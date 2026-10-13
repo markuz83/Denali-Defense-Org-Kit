@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ForecastingSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableForecasts>true</enableForecasts>
+    <globalForecastRangeSettings>
+        <beginning>-1</beginning>
+        <displaying>4</displaying>
+        <periodType>Quarter</periodType>
+    </globalForecastRangeSettings>
+    <globalQuotasSettings>
+        <showQuotas>true</showQuotas>
+    </globalQuotasSettings>
+</ForecastingSettings>

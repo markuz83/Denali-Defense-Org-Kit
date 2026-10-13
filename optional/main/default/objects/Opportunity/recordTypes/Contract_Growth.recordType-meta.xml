@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contract_Growth</fullName>
+    <active>true</active>
+    <businessProcess>Contract Growth</businessProcess>
+    <description>Task orders, modifications and option exercises under an existing contract.</description>
+    <label>Contract Growth</label>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Task Order</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Option Exercise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contract Modification</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

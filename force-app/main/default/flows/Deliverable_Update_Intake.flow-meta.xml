@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <assignments>
+        <name>Set_Project_And_Date</name>
+        <label>Set Project And Date</label>
+        <locationX>314</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Project__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fxProject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Submitted_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fxSubmittedDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Supplier_Blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Supplier</name>
+        <label>Set Supplier</label>
+        <locationX>182</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Supplier__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Deliverable__r.Supplier__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Submitter_Blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Submitted_By</name>
+        <label>Set Submitted By</label>
+        <locationX>182</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Submitted_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Supplier_Blank</name>
+        <label>Supplier Blank?</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>Submitter_Blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Keep Supplier</defaultConnectorLabel>
+        <rules>
+            <name>Fill_Supplier</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Supplier__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Deliverable__r.Supplier__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Supplier</targetReference>
+            </connector>
+            <label>Fill Supplier</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Submitter_Blank</name>
+        <label>Submitter Blank?</label>
+        <locationX>314</locationX>
+        <locationY>695</locationY>
+        <defaultConnectorLabel>Keep Submitter</defaultConnectorLabel>
+        <rules>
+            <name>Fill_Submitter</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Submitted_By__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$User.ContactId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Submitted_By</targetReference>
+            </connector>
+            <label>Fill Submitter</label>
+        </rules>
+    </decisions>
+    <description>Automation inventory #4. Fills blank Project and Supplier from the Deliverable, Submitted By from the portal user&apos;s Contact, and Submitted Date with now. Values already set (e.g. by the seed script) are kept.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>fxProject</name>
+        <dataType>String</dataType>
+        <expression>BLANKVALUE({!$Record.Project__c}, {!$Record.Deliverable__r.Project__c})</expression>
+    </formulas>
+    <formulas>
+        <name>fxSubmittedDate</name>
+        <dataType>DateTime</dataType>
+        <expression>BLANKVALUE({!$Record.Submitted_Date__c}, NOW())</expression>
+    </formulas>
+    <interviewLabel>Deliverable Update Intake {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Deliverable Update Intake</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Project_And_Date</targetReference>
+        </connector>
+        <object>Deliverable_Update__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

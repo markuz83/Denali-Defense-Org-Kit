@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>At_Least_One_Parent</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISBLANK(Account__c), ISBLANK(Contract__c), ISBLANK(Project__c), ISBLANK(Deliverable__c))</errorConditionFormula>
+    <errorMessage>Link the risk to at least one Account, Contract, Project, or Deliverable.</errorMessage>
+</ValidationRule>

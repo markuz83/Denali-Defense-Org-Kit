@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deals_Lost_To__c</fullName>
+    <description>Competitors: number of Closed Lost opportunities where this account is Lost To. Flow/DLRS rollup; filled by 03_recalculate_rollups.apex until then. Grounds the Pricing Rationale prompt.</description>
+    <label>Deals Lost To</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

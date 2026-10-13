@@ -1,0 +1,11 @@
+<template>
+    <template lwc:if={error}>
+        <lightning-card title="Delivery Timeline" icon-name="standard:timeslot">
+            <p class="slds-var-p-horizontal_medium slds-text-color_error">{error}</p>
+        </lightning-card>
+    </template>
+    <template lwc:else>
+        <c-command-center-timeline title="Delivery Timeline" items={items}
+            empty-message="No dated deliverables on this project."></c-command-center-timeline>
+    </template>
+</template>

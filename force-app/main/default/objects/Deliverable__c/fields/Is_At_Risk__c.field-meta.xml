@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_At_Risk__c</fullName>
+    <formula>OR(ISPICKVAL(Health__c, "Red"), ISPICKVAL(Status__c, "Blocked"), ISPICKVAL(Risk_Level__c, "Critical"))</formula>
+    <label>Is At Risk</label>
+    <type>Checkbox</type>
+</CustomField>

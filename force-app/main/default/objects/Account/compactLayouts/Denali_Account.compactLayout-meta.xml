@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Denali_Account</fullName>
+    <fields>Name</fields>
+    <fields>Role_Summary__c</fields>
+    <fields>Customer_Health__c</fields>
+    <fields>Customer_Tier__c</fields>
+    <fields>Account_Status__c</fields>
+    <fields>Government_Account__c</fields>
+    <fields>OwnerId</fields>
+    <fields>Strategic_Account__c</fields>
+    <fields>Executive_Sponsor__c</fields>
+    <fields>Phone</fields>
+    <label>Denali Account</label>
+</CompactLayout>

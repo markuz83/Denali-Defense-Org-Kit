@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Employee_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK(Employee__c)</errorConditionFormula>
+    <errorDisplayField>Employee__c</errorDisplayField>
+    <errorMessage>Employee is required.</errorMessage>
+</ValidationRule>

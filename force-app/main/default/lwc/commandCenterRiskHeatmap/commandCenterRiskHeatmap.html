@@ -1,0 +1,46 @@
+<template>
+    <lightning-card title={title} icon-name="custom:custom91">
+        <div class="slds-var-p-horizontal_medium">
+            <template lwc:if={hasRisks}>
+                <div class="heatmap slds-grid slds-grid_vertical" role="grid" aria-label="Risk heat map: likelihood by consequence">
+                    <template for:each={grid} for:item="row">
+                        <div key={row.key} class="heat-row" role="row">
+                            <div class="axis-label slds-grid slds-grid_vertical-align-center" role="rowheader">{row.label}</div>
+                            <template for:each={row.cells} for:item="cell">
+                                <button key={cell.key} class={cell.className} data-key={cell.key}
+                                    title={cell.label} aria-label={cell.label} onclick={handleCellClick}>
+                                    {cell.count}
+                                </button>
+                            </template>
+                        </div>
+                    </template>
+                    <div class="heat-row">
+                        <div class="axis-label slds-grid slds-grid_vertical-align-center"></div>
+                        <template for:each={consequenceLabels} for:item="c">
+                            <div key={c.key} class="axis-label slds-grid slds-grid_vertical-align-center axis-label-bottom slds-grid_align-center slds-text-align_center">{c.level}<br />{c.label}</div>
+                        </template>
+                    </div>
+                </div>
+                <p class="slds-text-body_small slds-text-color_weak slds-var-m-top_xx-small">
+                    Likelihood (rows) × Consequence (columns). Select a cell to list its risks.
+                </p>
+                <template lwc:if={hasUnscored}>
+                    <button class="slds-button slds-var-m-top_x-small" onclick={handleUnscoredClick}>{unscoredLabel}</button>
+                </template>
+                <template lwc:if={hasSelection}>
+                    <ul class="slds-has-dividers_top-space slds-var-m-top_small">
+                        <template for:each={selectedRisks} for:item="risk">
+                            <li key={risk.id} class="slds-item">
+                                <a data-id={risk.id} onclick={handleRiskClick}>{risk.name}</a>
+                                <div class="slds-text-body_small slds-text-color_weak">{risk.meta}</div>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+            </template>
+            <template lwc:else>
+                <p class="slds-text-color_weak slds-var-p-vertical_small">No open risks on this account.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

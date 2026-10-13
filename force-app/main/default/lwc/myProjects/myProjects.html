@@ -1,0 +1,117 @@
+<template>
+    <lightning-card title="My Projects" icon-name="custom:custom63">
+        <div slot="actions" class="actions slds-grid slds-grid_vertical-align-center">
+            <template lwc:if={live}><span class="live" title="Updates automatically when deliverables or supplier updates change">● Live</span></template>
+            <lightning-button-icon icon-name="utility:refresh" alternative-text="Refresh" title="Refresh"
+                onclick={handleRefresh}></lightning-button-icon>
+        </div>
+        <div class="slds-var-p-horizontal_medium">
+            <template lwc:if={isLoading}>
+                <div class="spinner-holder slds-is-relative"><lightning-spinner alternative-text="Loading" size="small"></lightning-spinner></div>
+            </template>
+            <template lwc:if={error}>
+                <p class="slds-text-color_error">{error}</p>
+            </template>
+
+            <template lwc:if={work}>
+                <div class="kpis">
+                    <template for:each={kpis} for:item="k">
+                        <div key={k.key} class={k.className}>
+                            <div class="kpi-label">{k.label}</div>
+                            <div class="kpi-value">{k.value}</div>
+                            <div class="kpi-sub">{k.sub}</div>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="columns slds-grid slds-wrap slds-var-m-top_medium">
+                    <!-- Projects -->
+                    <section class="col slds-no-space col-wide">
+                        <h3 class="slds-text-title_caps slds-var-m-bottom_x-small">Projects</h3>
+                        <template lwc:if={hasProjects}>
+                            <ul class="cards slds-grid slds-grid_vertical">
+                                <template for:each={projectCards} for:item="p">
+                                    <li key={p.id} class="card">
+                                        <div class="card-head slds-grid slds-grid_vertical-align-center">
+                                            <c-health-dot value={p.health} size="xx-small" class="health"></c-health-dot>
+                                            <a data-id={p.id} onclick={handleOpen} class="slds-text-heading_small">{p.name}</a>
+                                        </div>
+                                        <p class="slds-text-body_small slds-text-color_weak">{p.meta}</p>
+                                        <div class="progress slds-scrollable_none"><div class="progress-fill" style={p.progressStyle}></div></div>
+                                        <p class="slds-text-body_small">{p.progressLabel}</p>
+                                        <template lwc:if={p.hasChips}>
+                                            <div class="chips slds-grid slds-wrap">
+                                                <template for:each={p.chips} for:item="c">
+                                                    <span key={c.key} class={c.className}>{c.label}</span>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template lwc:else>
+                            <p class="slds-text-color_weak">You aren't the Project Manager on any active project.</p>
+                        </template>
+                    </section>
+
+                    <!-- Side lists -->
+                    <section class="col slds-no-space">
+                        <h3 class="slds-text-title_caps slds-var-m-bottom_x-small">Supplier updates to review</h3>
+                        <template lwc:if={hasUpdates}>
+                            <ul class="list">
+                                <template for:each={updateItems} for:item="u">
+                                    <li key={u.id} class="list-item">
+                                        <a data-id={u.deliverableId} onclick={handleOpen}>{u.title}</a>
+                                        <div class="slds-text-body_small slds-text-color_weak">{u.meta}</div>
+                                        <template lwc:if={u.flag}>
+                                            <div class="slds-text-body_small slds-text-color_error">{u.flag}</div>
+                                        </template>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template lwc:else>
+                            <p class="slds-text-color_weak slds-var-m-bottom_small">Nothing waiting on you.</p>
+                        </template>
+
+                        <h3 class="slds-text-title_caps slds-var-m-top_medium slds-var-m-bottom_x-small">Due in the next 30 days</h3>
+                        <template lwc:if={hasDue}>
+                            <ul class="list">
+                                <template for:each={dueItems} for:item="d">
+                                    <li key={d.id} class="list-item due">
+                                        <c-health-dot value={d.health} size="xx-small" class="health"></c-health-dot>
+                                        <div class="due-main slds-no-space">
+                                            <a data-id={d.id} onclick={handleOpen}>{d.name}</a>
+                                            <div class="slds-text-body_small slds-text-color_weak">{d.meta}</div>
+                                        </div>
+                                        <span class={d.whenClass}>{d.when}</span>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template lwc:else>
+                            <p class="slds-text-color_weak slds-var-m-bottom_small">Nothing due in the next 30 days.</p>
+                        </template>
+
+                        <h3 class="slds-text-title_caps slds-var-m-top_medium slds-var-m-bottom_x-small">Open risks</h3>
+                        <template lwc:if={hasRisks}>
+                            <ul class="list">
+                                <template for:each={riskItems} for:item="r">
+                                    <li key={r.id} class="list-item">
+                                        <span class={r.severityClass}>{r.severity}</span>
+                                        <a data-id={r.id} onclick={handleOpen}>{r.name}</a>
+                                        <div class="slds-text-body_small slds-text-color_weak">{r.meta}</div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template lwc:else>
+                            <p class="slds-text-color_weak">No open risks on your projects.</p>
+                        </template>
+                    </section>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

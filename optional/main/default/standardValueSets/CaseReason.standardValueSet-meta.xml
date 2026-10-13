@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Outage</fullName>
+        <default>false</default>
+        <label>Outage</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Degraded Performance</fullName>
+        <default>false</default>
+        <label>Degraded Performance</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Security Event</fullName>
+        <default>false</default>
+        <label>Security Event</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Hardware Failure</fullName>
+        <default>false</default>
+        <label>Hardware Failure</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Access Request</fullName>
+        <default>false</default>
+        <label>Access Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Configuration Change</fullName>
+        <default>false</default>
+        <label>Configuration Change</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training Request</fullName>
+        <default>false</default>
+        <label>Training Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Equipment Request</fullName>
+        <default>false</default>
+        <label>Equipment Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Recurring Incident</fullName>
+        <default>false</default>
+        <label>Recurring Incident</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Known Error</fullName>
+        <default>false</default>
+        <label>Known Error</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Standard Change</fullName>
+        <default>false</default>
+        <label>Standard Change</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Emergency Change</fullName>
+        <default>false</default>
+        <label>Emergency Change</label>
+    </standardValue>
+</StandardValueSet>

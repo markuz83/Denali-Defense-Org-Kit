@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Original_Margin_Locked</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISCHANGED(Original_Margin__c), ISPICKVAL(PRIORVALUE(Status), "Activated"))</errorConditionFormula>
+    <errorDisplayField>Original_Margin__c</errorDisplayField>
+    <errorMessage>Original Margin % can't change once the contract is activated.</errorMessage>
+</ValidationRule>

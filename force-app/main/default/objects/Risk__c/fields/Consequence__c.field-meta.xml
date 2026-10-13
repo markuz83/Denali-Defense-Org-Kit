@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Consequence__c</fullName>
+    <label>Consequence</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1 - Minimal</fullName>
+                <default>false</default>
+                <label>1 - Minimal</label>
+            </value>
+            <value>
+                <fullName>2 - Minor</fullName>
+                <default>false</default>
+                <label>2 - Minor</label>
+            </value>
+            <value>
+                <fullName>3 - Moderate</fullName>
+                <default>false</default>
+                <label>3 - Moderate</label>
+            </value>
+            <value>
+                <fullName>4 - Significant</fullName>
+                <default>false</default>
+                <label>4 - Significant</label>
+            </value>
+            <value>
+                <fullName>5 - Severe</fullName>
+                <default>false</default>
+                <label>5 - Severe</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

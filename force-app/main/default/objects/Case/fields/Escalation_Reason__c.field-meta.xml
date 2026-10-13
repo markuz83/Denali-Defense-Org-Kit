@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Escalation_Reason__c</fullName>
+    <label>Escalation Reason</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>SLA Risk</fullName>
+                <default>false</default>
+                <label>SLA Risk</label>
+            </value>
+            <value>
+                <fullName>Customer Request</fullName>
+                <default>false</default>
+                <label>Customer Request</label>
+            </value>
+            <value>
+                <fullName>Executive Visibility</fullName>
+                <default>false</default>
+                <label>Executive Visibility</label>
+            </value>
+            <value>
+                <fullName>Technical Complexity</fullName>
+                <default>false</default>
+                <label>Technical Complexity</label>
+            </value>
+            <value>
+                <fullName>Supplier Dependency</fullName>
+                <default>false</default>
+                <label>Supplier Dependency</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

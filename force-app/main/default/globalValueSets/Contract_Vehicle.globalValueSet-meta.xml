@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>IDIQ</fullName>
+        <default>false</default>
+        <label>IDIQ</label>
+    </customValue>
+    <customValue>
+        <fullName>GWAC</fullName>
+        <default>false</default>
+        <label>GWAC</label>
+    </customValue>
+    <customValue>
+        <fullName>GSA Schedule</fullName>
+        <default>false</default>
+        <label>GSA Schedule</label>
+    </customValue>
+    <customValue>
+        <fullName>BPA</fullName>
+        <default>false</default>
+        <label>BPA</label>
+    </customValue>
+    <customValue>
+        <fullName>BOA</fullName>
+        <default>false</default>
+        <label>BOA</label>
+    </customValue>
+    <customValue>
+        <fullName>Direct Contract</fullName>
+        <default>false</default>
+        <label>Direct Contract</label>
+    </customValue>
+    <masterLabel>Contract Vehicle</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

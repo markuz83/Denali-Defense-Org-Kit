@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <assignments>
+        <name>Clear_Approval</name>
+        <label>Clear Approval</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Margin_Approval_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Clears Margin Approval Status when Estimated Margin or Contract Type changes after a decision, so an approval at one price can&apos;t carry a deeper discount through the Margin_Approval_Required gate.</description>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity Margin Approval Reset {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Margin Approval Reset</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Clear_Approval</targetReference>
+        </connector>
+        <filterFormula>AND(NOT(ISBLANK(TEXT({!$Record.Margin_Approval_Status__c}))), NOT(ISPICKVAL({!$Record.Margin_Approval_Status__c}, &quot;Pending&quot;)), OR(ISCHANGED({!$Record.Estimated_Margin__c}), ISCHANGED({!$Record.Contract_Type__c})))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,59 @@
+.heatmap {
+    gap: var(--slds-g-spacing-1, 0.25rem);
+}
+
+.heat-row {
+    display: grid;
+    grid-template-columns: minmax(6.5rem, 1.4fr) repeat(5, 1fr);
+    gap: var(--slds-g-spacing-1, 0.25rem);
+}
+
+.axis-label {
+    font-size: var(--slds-g-font-scale-neg-1, 0.75rem);
+    color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+.axis-label-bottom {
+    line-height: 1.1;
+}
+
+.cell {
+    border: 0;
+    border-radius: var(--slds-g-radius-border-1, 0.25rem);
+    min-height: var(--slds-g-sizing-9, 2rem);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    font-size: var(--slds-g-font-scale-1, 0.875rem);
+    color: var(--slds-g-color-on-surface-3, #03234d);
+    cursor: pointer;
+    opacity: 0.45;
+}
+
+.cell-filled {
+    opacity: 1;
+}
+
+.cell-selected {
+    outline: var(--slds-g-sizing-border-3, 3px) solid var(--slds-g-color-border-accent-1, #066afe);
+    outline-offset: var(--slds-g-sizing-border-1, 1px);
+}
+
+.cell:focus-visible {
+    outline: var(--slds-g-sizing-border-3, 3px) solid var(--slds-g-color-border-accent-1, #066afe);
+    outline-offset: var(--slds-g-sizing-border-1, 1px);
+}
+
+.cell-low {
+    background: var(--slds-g-color-success-container-1, #acf3e4);
+}
+
+.cell-medium {
+    background: var(--slds-g-color-warning-container-1, #f9e3b6);
+}
+
+.cell-high {
+    background: var(--slds-g-color-warning-base-80, #fcc003);
+}
+
+.cell-critical {
+    background: var(--slds-g-color-error-container-2, #fdb6c5);
+}

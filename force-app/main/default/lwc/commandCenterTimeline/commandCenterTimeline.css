@@ -1,0 +1,108 @@
+.timeline-host {
+    width: 100%;
+    overflow: hidden;
+}
+
+.timeline {
+    display: block;
+    font-family: inherit;
+}
+
+.tick-label {
+    font-size: var(--slds-g-font-scale-neg-1, 0.75rem);
+    fill: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+.gridline {
+    stroke: var(--slds-g-color-surface-container-3, #e5e5e5);
+    stroke-width: 1;
+}
+
+.group-label {
+    font-size: var(--slds-g-font-scale-neg-1, 0.75rem);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    fill: var(--slds-g-color-on-surface-3, #03234d);
+}
+
+.group-rule {
+    stroke: var(--slds-g-color-border-1, #c9c9c9);
+    stroke-width: 1;
+}
+
+.row {
+    cursor: pointer;
+}
+
+.row-hit {
+    fill: transparent;
+}
+
+.row:hover .row-hit {
+    fill: var(--slds-g-color-surface-container-2, #f3f3f3);
+}
+
+.row-label {
+    font-size: var(--slds-g-font-scale-neg-1, 0.75rem);
+    fill: var(--slds-g-color-on-surface-2, #2e2e2e);
+}
+
+.slip-line {
+    stroke: var(--slds-g-color-error-1, #b60554);
+    stroke-width: 2;
+    stroke-dasharray: 4 3;
+}
+
+.today-line {
+    stroke: var(--slds-g-color-accent-1, #066afe);
+    stroke-width: 1.5;
+}
+
+.legend {
+    gap: var(--slds-g-spacing-1, 0.25rem) var(--slds-g-spacing-3, 0.75rem);
+    color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+.swatch {
+    width: var(--slds-g-sizing-4, 0.75rem);
+    height: var(--slds-g-sizing-3, 0.5rem);
+    border-radius: var(--slds-g-radius-border-1, 0.25rem);
+    margin-right: var(--slds-g-spacing-1, 0.25rem);
+    vertical-align: middle;
+}
+
+.swatch-green {
+    background: var(--slds-g-color-success-1, #056764);
+}
+
+.swatch-yellow {
+    background: var(--slds-g-color-border-warning-1, #dd7a01);
+}
+
+.swatch-red {
+    background: var(--slds-g-color-error-1, #b60554);
+}
+
+.slip {
+    color: var(--slds-g-color-error-1, #b60554);
+}
+
+.today {
+    color: var(--slds-g-color-accent-1, #066afe);
+}
+
+/* Bars and forecast diamonds, by health */
+.health-green {
+    fill: var(--slds-g-color-success-1, #056764);
+}
+
+.health-yellow {
+    fill: var(--slds-g-color-border-warning-1, #dd7a01);
+}
+
+.health-red {
+    fill: var(--slds-g-color-error-1, #b60554);
+}
+
+.health-none {
+    fill: var(--slds-g-color-disabled-1, #757575);
+}

@@ -1,0 +1,90 @@
+<template>
+    <lightning-card title={title} icon-name="standard:work_order">
+        <div slot="actions" class="actions slds-grid slds-grid_vertical-align-center">
+            <template lwc:if={live}><span class="live" title="Updates automatically when deliverables or supplier updates change">● Live</span></template>
+            <lightning-button-icon icon-name="utility:refresh" alternative-text="Refresh" title="Refresh"
+                onclick={handleRefresh}></lightning-button-icon>
+        </div>
+        <div class="slds-var-p-horizontal_medium">
+            <template lwc:if={isLoading}>
+                <div class="spinner-holder slds-is-relative"><lightning-spinner alternative-text="Loading" size="small"></lightning-spinner></div>
+            </template>
+            <template lwc:if={error}>
+                <p class="slds-text-color_error">{error}</p>
+            </template>
+
+            <template lwc:if={data}>
+                <p class="slds-text-body_small slds-text-color_weak">{summary}</p>
+
+                <template lwc:if={trend}>
+                    <div class="trend slds-var-m-top_x-small">
+                        <svg class="spark slds-show" viewBox={trend.viewBox} preserveAspectRatio="none" role="img" aria-label={trend.label}>
+                            <polyline points={trend.points} class={trend.lineClass}></polyline>
+                            <template for:each={trend.dots} for:item="dot">
+                                <circle key={dot.key} cx={dot.cx} cy={dot.cy} r="3" class={trend.dotClass}></circle>
+                            </template>
+                        </svg>
+                        <p class={trend.labelClass}>{trend.label}</p>
+                    </div>
+                </template>
+
+                <template lwc:if={hasUpdates}>
+                    <ul class="updates slds-grid slds-grid_vertical slds-var-m-top_small">
+                        <template for:each={updateCards} for:item="u">
+                            <li key={u.id} class={u.cardClass}>
+                                <div class="update-head slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-wrap">
+                                    <span class={u.statusClass}>{u.status}</span>
+                                    <span class="slds-text-body_small slds-text-color_weak">{u.submitted}</span>
+                                </div>
+                                <div class="reported slds-grid slds-wrap">
+                                    <span>{u.reported}</span>
+                                    <template lwc:if={u.health}>
+                                        <span class={u.healthClass}>Supplier: {u.health}</span>
+                                    </template>
+                                </div>
+                                <template lwc:if={u.summary}>
+                                    <lightning-formatted-text class="block slds-show" value={u.summary}></lightning-formatted-text>
+                                </template>
+                                <template lwc:if={u.blockers}>
+                                    <p class="slds-var-m-top_xx-small"><strong>Blockers:</strong> {u.blockers}</p>
+                                </template>
+                                <template lwc:if={u.customerAction}>
+                                    <p class="slds-var-m-top_xx-small slds-text-color_error"><strong>Customer action:</strong> {u.customerAction}</p>
+                                </template>
+                                <template lwc:if={u.nextSteps}>
+                                    <p class="slds-var-m-top_xx-small"><strong>Next:</strong> {u.nextSteps}</p>
+                                </template>
+                                <template lwc:if={u.reviewerComments}>
+                                    <p class="slds-var-m-top_xx-small slds-text-body_small"><strong>Reviewer:</strong> {u.reviewerComments}</p>
+                                </template>
+                                <template lwc:if={u.reviewed}>
+                                    <p class="slds-text-body_small slds-text-color_weak">{u.reviewed}</p>
+                                </template>
+
+                                <template lwc:if={u.open}>
+                                    <lightning-textarea label="Comments to the supplier" data-id={u.id} value={u.comment}
+                                        placeholder="Required to send back or reject" onchange={handleComment}
+                                        class="slds-var-m-top_x-small"></lightning-textarea>
+                                    <div class="decide slds-grid slds-wrap slds-var-m-top_x-small">
+                                        <lightning-button variant="brand" label="Accept" data-id={u.id} disabled={u.busy}
+                                            onclick={handleAccept}></lightning-button>
+                                        <lightning-button label="Needs Clarification" data-id={u.id} disabled={u.busy}
+                                            onclick={handleClarify}></lightning-button>
+                                        <lightning-button variant="destructive-text" label="Reject" data-id={u.id} disabled={u.busy}
+                                            onclick={handleReject}></lightning-button>
+                                    </div>
+                                </template>
+                            </li>
+                        </template>
+                    </ul>
+                    <template lwc:if={canShowMore}>
+                        <lightning-button variant="base" label={showMoreLabel} onclick={handleShowMore}></lightning-button>
+                    </template>
+                </template>
+                <template lwc:else>
+                    <p class="slds-text-color_weak slds-var-m-top_small">No supplier updates on this deliverable yet.</p>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

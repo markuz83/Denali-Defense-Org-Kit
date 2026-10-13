@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Forecast_Margin__c</fullName>
+    <description>Margin expected at completion: revenue allocated to the project less forecast cost, over revenue allocated.</description>
+    <formula>IF(Revenue_Allocation__c &gt; 0, (Revenue_Allocation__c - Forecast_Cost__c) / Revenue_Allocation__c, NULL)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>(Revenue Allocation - Forecast Cost) / Revenue Allocation. What this project will earn if the current cost forecast holds.</inlineHelpText>
+    <label>Forecast Margin %</label>
+    <precision>18</precision>
+    <scale>2</scale>
+    <type>Percent</type>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Track_as_Asset__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Part of the customer&apos;s installed base: winning a deal with this product creates an Asset (Opportunity Create Assets on Win). Used instead of the standard Is Assetizable field, which needs Industries or Revenue Cloud licensing.</description>
+    <inlineHelpText>Tick for hardware, licenses and annual services the customer owns or renews. Leave unticked for labor, implementations and training.</inlineHelpText>
+    <label>Track as Asset</label>
+    <type>Checkbox</type>
+</CustomField>

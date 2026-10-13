@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Email_Submitter</name>
+        <label>Email Submitter</label>
+        <locationX>1106</locationX>
+        <locationY>700</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>Get_Submitter.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>ttBounceSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>ttBounceBody</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>64.0</apiVersion>
+    <assignments>
+        <name>Apply_Update</name>
+        <label>Apply Update</label>
+        <locationX>182</locationX>
+        <locationY>500</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Deliverable.Percent_Complete__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fxPercentComplete</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Deliverable.Forecast_Completion_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fxForecastDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Deliverable.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fxStatus</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Deliverable.Actual_Completion_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fxActualCompletionDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Deliverable.Requires_Customer_Action__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Requires_Customer_Action__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Deliverable.Latest_Update_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Reported_Blocked</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_Blockers</name>
+        <label>Copy Blockers</label>
+        <locationX>50</locationX>
+        <locationY>700</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Deliverable.Blocker_Description__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Blockers__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Customer_Action_Needed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_Customer_Action</name>
+        <label>Copy Customer Action</label>
+        <locationX>50</locationX>
+        <locationY>900</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Deliverable.Customer_Action_Description__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Customer_Action__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Deliverable</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Is_Accepted</name>
+        <label>Is Accepted?</label>
+        <locationX>380</locationX>
+        <locationY>200</locationY>
+        <defaultConnectorLabel>Not Accepted</defaultConnectorLabel>
+        <rules>
+            <name>Accepted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Internal_Review_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Deliverable</targetReference>
+            </connector>
+            <label>Accepted</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Reported_Blocked</name>
+        <label>Reported Blocked?</label>
+        <locationX>182</locationX>
+        <locationY>600</locationY>
+        <defaultConnector>
+            <targetReference>Customer_Action_Needed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Blocked</defaultConnectorLabel>
+        <rules>
+            <name>Blocked_With_Blockers</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Reported_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Blocked</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Blockers__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_Blockers</targetReference>
+            </connector>
+            <label>Blocked With Blockers</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Customer_Action_Needed</name>
+        <label>Customer Action Needed?</label>
+        <locationX>182</locationX>
+        <locationY>800</locationY>
+        <defaultConnector>
+            <targetReference>Update_Deliverable</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Customer Action</defaultConnectorLabel>
+        <rules>
+            <name>Requires_Customer_Action</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Requires_Customer_Action__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_Customer_Action</targetReference>
+            </connector>
+            <label>Requires Customer Action</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Bounced</name>
+        <label>Is Bounced?</label>
+        <locationX>1238</locationX>
+        <locationY>200</locationY>
+        <defaultConnectorLabel>Not Bounced</defaultConnectorLabel>
+        <rules>
+            <name>Bounced_To_Submitter</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Internal_Review_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Needs Clarification</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Internal_Review_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Submitted_By__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Submitter</targetReference>
+            </connector>
+            <label>Bounced To Submitter</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Submitter_Has_Email</name>
+        <label>Submitter Has Email?</label>
+        <locationX>1238</locationX>
+        <locationY>500</locationY>
+        <defaultConnectorLabel>No Email</defaultConnectorLabel>
+        <rules>
+            <name>Has_Email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Submitter.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Email_Submitter</targetReference>
+            </connector>
+            <label>Has Email</label>
+        </rules>
+    </decisions>
+    <description>Automation inventory #6. On Accepted, pushes the update onto its Deliverable (percent complete, forecast date, status, customer action, blockers) and stamps Latest Update Date; Health stays PM-owned. On Needs Clarification or Rejected, emails the submitter the Reviewer Comments on the asynchronous path, so an email failure never blocks the review.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Stamps today when the supplier reports Complete and no completion date exists, which the Actual_Completion_Required validation rule needs.</description>
+        <name>fxActualCompletionDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(AND(ISPICKVAL({!$Record.Reported_Status__c}, &quot;Complete&quot;), ISBLANK({!Get_Deliverable.Actual_Completion_Date__c})), TODAY(), {!Get_Deliverable.Actual_Completion_Date__c})</expression>
+    </formulas>
+    <formulas>
+        <name>fxForecastDate</name>
+        <dataType>Date</dataType>
+        <expression>BLANKVALUE({!$Record.Forecast_Completion_Date__c}, {!Get_Deliverable.Forecast_Completion_Date__c})</expression>
+    </formulas>
+    <formulas>
+        <name>fxPercentComplete</name>
+        <dataType>Number</dataType>
+        <expression>BLANKVALUE({!$Record.Percent_Complete__c}, {!Get_Deliverable.Percent_Complete__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>fxStatus</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK(TEXT({!$Record.Reported_Status__c})), TEXT({!Get_Deliverable.Status__c}), TEXT({!$Record.Reported_Status__c}))</expression>
+    </formulas>
+    <interviewLabel>Deliverable Update Review {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Deliverable Update Review</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Deliverable</name>
+        <label>Get Deliverable</label>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Apply_Update</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Deliverable__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Deliverable__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Percent_Complete__c</queriedFields>
+        <queriedFields>Forecast_Completion_Date__c</queriedFields>
+        <queriedFields>Status__c</queriedFields>
+        <queriedFields>Actual_Completion_Date__c</queriedFields>
+        <queriedFields>Requires_Customer_Action__c</queriedFields>
+        <queriedFields>Customer_Action_Description__c</queriedFields>
+        <queriedFields>Blocker_Description__c</queriedFields>
+        <queriedFields>Latest_Update_Date__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Submitter</name>
+        <label>Get Submitter</label>
+        <locationX>1106</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Submitter_Has_Email</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Submitted_By__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Email</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Deliverable</name>
+        <label>Update Deliverable</label>
+        <locationX>182</locationX>
+        <locationY>1000</locationY>
+        <inputReference>Get_Deliverable</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>650</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_Accepted</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Internal_Review_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Accepted</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Internal_Review_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Needs Clarification</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Internal_Review_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </filters>
+        <object>Deliverable_Update__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Is_Bounced</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>ttBounceBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Your update {!$Record.Name} on {!$Record.Deliverable__r.Name} was marked {!$Record.Internal_Review_Status__c}.
+
+Reviewer comments:
+{!$Record.Reviewer_Comments__c}
+
+Please respond by submitting a new update on the deliverable.</text>
+    </textTemplates>
+    <textTemplates>
+        <name>ttBounceSubject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Update {!$Record.Internal_Review_Status__c}: {!$Record.Deliverable__r.Name}</text>
+    </textTemplates>
+</Flow>

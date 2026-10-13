@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Competitive__c</fullName>
+    <formula>ISPICKVAL(Acquisition_Type__c, "Competitive")</formula>
+    <label>Competitive</label>
+    <type>Checkbox</type>
+</CustomField>

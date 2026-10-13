@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Engagement__c</fullName>
+    <label>Service Engagement</label>
+    <referenceTo>Service_Engagement__c</referenceTo>
+    <relationshipLabel>Engagement Milestones</relationshipLabel>
+    <relationshipName>Engagement_Milestones</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

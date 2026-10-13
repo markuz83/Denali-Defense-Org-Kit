@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New Pursuit</fullName>
+    <description>Competitive new work and recompetes: the full capture lifecycle, with the pursue and bid/no-bid gates.</description>
+    <isActive>true</isActive>
+    <values>
+        <fullName>Identified</fullName>
+    </values>
+    <values>
+        <fullName>Qualified</fullName>
+    </values>
+    <values>
+        <fullName>Capture / Shaping</fullName>
+    </values>
+    <values>
+        <fullName>Bid Decision</fullName>
+    </values>
+    <values>
+        <fullName>Proposal Development</fullName>
+    </values>
+    <values>
+        <fullName>Proposal Submitted</fullName>
+    </values>
+    <values>
+        <fullName>Discussions / Negotiation</fullName>
+    </values>
+    <values>
+        <fullName>Closed Won</fullName>
+    </values>
+    <values>
+        <fullName>Closed Lost</fullName>
+    </values>
+    <values>
+        <fullName>No Bid</fullName>
+    </values>
+</BusinessProcess>

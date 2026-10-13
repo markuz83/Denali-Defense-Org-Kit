@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <description>Automation inventory #10. When a Case with a Deliverable becomes Sev 1 or Sev 2, creates an Identified, Technical Risk on that Deliverable (Risk Parents fills Project, Contract, Account). It fills what the case already establishes: Revenue at Risk from the Deliverable&apos;s revenue milestone, Risk Owner from the Project Manager, Target Resolution Date from the Deliverable&apos;s due date, and Consequence from the case severity (Sev 1: 5 - Severe, Sev 2: 4 - Significant). Likelihood is left for the PM to score, so Risk Score and Severity stay blank until then; a defaulted score of High or Critical would also need a Mitigation Plan the flow can&apos;t write.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>How bad it is if the risk lands, from the case severity. Only Sev 1 and Sev 2 cases reach this flow.</description>
+        <name>fxConsequence</name>
+        <dataType>String</dataType>
+        <expression>IF(ISPICKVAL({!$Record.Severity__c}, &quot;Sev 1 - Critical Outage&quot;), &quot;5 - Severe&quot;, &quot;4 - Significant&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>fxRiskName</name>
+        <dataType>String</dataType>
+        <expression>LEFT(&quot;Case &quot; &amp; {!$Record.CaseNumber} &amp; &quot;: &quot; &amp; {!$Record.Subject}, 80)</expression>
+    </formulas>
+    <interviewLabel>Case Create Risk {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Create Risk</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Risk</name>
+        <label>Create Risk</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>fxRiskName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Deliverable__c</field>
+            <value>
+                <elementReference>$Record.Deliverable__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Risk_Category__c</field>
+            <value>
+                <stringValue>Technical</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Identified</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Identified_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Consequence__c</field>
+            <value>
+                <elementReference>fxConsequence</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Revenue_at_Risk__c</field>
+            <value>
+                <elementReference>$Record.Deliverable__r.Revenue_Milestone__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Risk_Owner__c</field>
+            <value>
+                <elementReference>$Record.Deliverable__r.Project__r.Project_Manager__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Target_Resolution_Date__c</field>
+            <value>
+                <elementReference>$Record.Deliverable__r.Due_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Risk__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_Risk</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>Deliverable__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Severity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sev 1 - Critical Outage</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Severity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sev 2 - Major Degradation</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

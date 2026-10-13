@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <assignments>
+        <name>Set_Clock</name>
+        <label>Set Clock</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IsStopped</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fxWaitingOnCustomer</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SlaStartDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fxClockStart</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Automation inventory #16 (optional). Starts a new case's SLA clock (Case.SlaStartDate, which the Denali Service SLA entitlement process starts from) unless one is already set, and stops the clock (Case.IsStopped) while a case is Waiting on Customer. Waiting on Supplier keeps the clock running: supplier delays count against Denali's SLA. Needs Entitlement Management.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>fxClockStart</name>
+        <dataType>DateTime</dataType>
+        <expression>BLANKVALUE({!$Record.SlaStartDate}, {!$Flow.CurrentDateTime})</expression>
+    </formulas>
+    <formulas>
+        <name>fxWaitingOnCustomer</name>
+        <dataType>Boolean</dataType>
+        <expression>ISPICKVAL({!$Record.Status}, &quot;Waiting on Customer&quot;)</expression>
+    </formulas>
+    <interviewLabel>Case SLA Clock {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case SLA Clock</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Clock</targetReference>
+        </connector>
+        <filterFormula>ISNEW() || ISCHANGED({!$Record.Status})</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

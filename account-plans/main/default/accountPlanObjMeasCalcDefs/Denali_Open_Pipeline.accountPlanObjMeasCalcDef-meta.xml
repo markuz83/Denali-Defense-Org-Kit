@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AccountPlanObjMeasCalcDef xmlns="http://soap.sforce.com/2006/04/metadata">
+    <conditions>
+        <fieldName>Probability</fieldName>
+        <operation>GreaterThan</operation>
+        <value>0</value>
+    </conditions>
+    <conditions>
+        <fieldName>Probability</fieldName>
+        <operation>LessThan</operation>
+        <value>100</value>
+    </conditions>
+    <description>Open pipeline: Current Value is the sum of the selected Opportunities&apos; Amount while they are still open (probability above 0% and below 100%).</description>
+    <developerName>Denali_Open_Pipeline</developerName>
+    <masterLabel>Open Pipeline</masterLabel>
+    <rollupType>Sum</rollupType>
+    <status>Draft</status>
+    <targetField>Amount</targetField>
+    <targetObject>Opportunity</targetObject>
+</AccountPlanObjMeasCalcDef>

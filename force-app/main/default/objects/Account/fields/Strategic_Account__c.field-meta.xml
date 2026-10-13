@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Strategic_Account__c</fullName>
+    <formula>ISPICKVAL(Customer_Tier__c, "Strategic")</formula>
+    <label>Strategic Account</label>
+    <type>Checkbox</type>
+</CustomField>

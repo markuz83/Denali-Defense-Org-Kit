@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Supplier Updates Awaiting Review" icon-name="standard:work_order">
+        <div class="slds-var-p-horizontal_small">
+            <template lwc:if={error}>
+                <p class="slds-text-color_error slds-var-p-around_small">{error}</p>
+            </template>
+            <template lwc:elseif={hasRows}>
+                <lightning-datatable key-field="id" columns={columns} data={rows}
+                    hide-checkbox-column></lightning-datatable>
+            </template>
+            <template lwc:elseif={isEmpty}>
+                <p class="slds-text-color_weak slds-var-p-around_small">Nothing waiting on review.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

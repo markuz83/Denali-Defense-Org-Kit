@@ -1,0 +1,157 @@
+/* Phone layout. Same SLDS 2 styling hooks and fallbacks as the desktop accountCommandCenter. */
+
+.spinner-holder {
+    min-height: 6rem;
+}
+
+.header {
+    gap: var(--slds-g-spacing-2, 0.5rem);
+    margin-bottom: var(--slds-g-spacing-2, 0.5rem);
+}
+
+/* Action buttons: two per row, Go to Account across the full width below. The button host must be
+   a block for stretch to fill it. */
+.actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.action {
+    display: block;
+}
+
+.action_wide {
+    grid-column: 1 / -1;
+}
+
+/* KPI tiles: two per row on a phone. */
+.kpis {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.kpi {
+    border: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-border-1, #c9c9c9);
+    border-radius: var(--slds-g-radius-border-2, 0.5rem);
+    padding: var(--slds-g-spacing-2, 0.5rem) var(--slds-g-spacing-3, 0.75rem);
+    background: var(--slds-g-color-surface-container-1, #ffffff);
+}
+
+.kpi-alert {
+    border-left: var(--slds-g-sizing-border-4, 4px) solid var(--slds-g-color-border-error-1, #b60554);
+}
+
+.kpi-label,
+.kpi-sub {
+    font-size: var(--slds-g-font-scale-neg-1, 0.75rem);
+    color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+.kpi-value {
+    font-size: var(--slds-g-font-scale-3, 1.25rem);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    line-height: 1.3;
+    font-variant-numeric: tabular-nums;
+}
+
+/* List rows: big enough to tap, separated by a rule. */
+.row {
+    padding: var(--slds-g-spacing-3, 0.75rem) 0;
+    border-bottom: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-border-1, #c9c9c9);
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.row-line {
+    gap: var(--slds-g-spacing-3, 0.75rem);
+}
+
+.row-title {
+    font-weight: var(--slds-g-font-weight-6, 600);
+}
+
+/* SLA met or breached: an SLDS score dynamic icon before the breach count. */
+.sla {
+    gap: var(--slds-g-spacing-1, 0.25rem);
+}
+
+/* Risk score in a circle, red for High and Critical. */
+.score {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--slds-g-sizing-8, 2rem);
+    height: var(--slds-g-sizing-8, 2rem);
+    border-radius: var(--slds-g-radius-border-circle, 50%);
+    background: var(--slds-g-color-surface-container-3, #e5e5e5);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    font-variant-numeric: tabular-nums;
+}
+
+.score_high {
+    background: var(--slds-g-color-error-1, #b60554);
+    color: var(--slds-g-color-on-accent-1, #ffffff);
+}
+
+/* Contracts */
+.contract {
+    padding: var(--slds-g-spacing-3, 0.75rem) 0;
+    border-bottom: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-border-1, #c9c9c9);
+}
+
+.contract:last-child {
+    border-bottom: none;
+}
+
+.contract-head {
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.contract-value {
+    font-size: var(--slds-g-font-scale-3, 1.25rem);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    margin: var(--slds-g-spacing-1, 0.25rem) 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.funding-bar {
+    height: var(--slds-g-sizing-3, 0.5rem);
+    border-radius: var(--slds-g-radius-border-4, 1.25rem);
+    background: var(--slds-g-color-surface-container-3, #e5e5e5);
+}
+
+.seg {
+    height: 100%;
+}
+
+.seg-recognized,
+.dot-recognized {
+    background: var(--slds-g-color-success-1, #056764);
+}
+
+.seg-funded,
+.dot-funded {
+    background: var(--slds-g-color-accent-1, #066afe);
+}
+
+.dot-unfunded {
+    background: var(--slds-g-color-disabled-container-2, #c9c9c9);
+}
+
+.funding-legend {
+    gap: var(--slds-g-spacing-1, 0.25rem) var(--slds-g-spacing-3, 0.75rem);
+    margin: var(--slds-g-spacing-1, 0.25rem) 0 var(--slds-g-spacing-2, 0.5rem);
+    color: var(--slds-g-color-on-surface-2, #2e2e2e);
+}
+
+.dot {
+    width: var(--slds-g-sizing-3, 0.5rem);
+    height: var(--slds-g-sizing-3, 0.5rem);
+    border-radius: var(--slds-g-radius-border-circle, 50%);
+    margin-right: var(--slds-g-spacing-1, 0.25rem);
+}

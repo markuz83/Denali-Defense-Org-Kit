@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Notification</name>
+        <label>Send Notification</label>
+        <locationX>50</locationX>
+        <locationY>1100</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>Send_Email</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>Get_Notification_Type.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>recipientIds</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <elementReference>ttTitle</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>ttNotificationBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>customNotificationAction</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Email</name>
+        <label>Send Email</label>
+        <locationX>182</locationX>
+        <locationY>1300</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>Get_Project.Project_Manager__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>ttTitle</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>ttEmailBody</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>64.0</apiVersion>
+    <assignments>
+        <name>Add_PM_Recipient</name>
+        <label>Add PM Recipient</label>
+        <locationX>182</locationX>
+        <locationY>700</locationY>
+        <assignmentItems>
+            <assignToReference>recipientIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_Project.Project_Manager__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Notification_Type</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Has_Project</name>
+        <label>Has Project?</label>
+        <locationX>380</locationX>
+        <locationY>300</locationY>
+        <defaultConnectorLabel>No Project</defaultConnectorLabel>
+        <rules>
+            <name>Project_Set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Project__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Project</targetReference>
+            </connector>
+            <label>Project Set</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Project_Manager</name>
+        <label>Has Project Manager?</label>
+        <locationX>248</locationX>
+        <locationY>600</locationY>
+        <defaultConnectorLabel>No Project Manager</defaultConnectorLabel>
+        <rules>
+            <name>Project_Manager_Set</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Project.Project_Manager__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_PM_Recipient</targetReference>
+            </connector>
+            <label>Project Manager Set</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Notification_Type_Found</name>
+        <label>Notification Type Found?</label>
+        <locationX>182</locationX>
+        <locationY>1000</locationY>
+        <defaultConnector>
+            <targetReference>Send_Email</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Found</defaultConnectorLabel>
+        <rules>
+            <name>Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Notification_Type</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Notification</targetReference>
+            </connector>
+            <label>Found</label>
+        </rules>
+    </decisions>
+    <description>Automation inventory #5. When a Deliverable Update is created, sends the Project Manager a custom notification (bell + mobile) and an email. Runs on the asynchronous path so a notification or email failure never blocks the supplier&apos;s submission. Record-triggered flows run in system context without sharing, so it can read Project -&gt; Project Manager even when the submitter is a portal user who can&apos;t see the Project.</description>
+    <environments>Default</environments>
+    <interviewLabel>Deliverable Update Notify PM {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Deliverable Update Notify PM</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Project</name>
+        <label>Get Project</label>
+        <locationX>248</locationX>
+        <locationY>450</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_Project_Manager</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Project__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Project__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Notification_Type</name>
+        <label>Get Notification Type</label>
+        <locationX>182</locationX>
+        <locationY>850</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Notification_Type_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Deliverable_Update_Submitted</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CustomNotificationType</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
+        <object>Deliverable_Update__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Has_Project</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>ttEmailBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>A supplier submitted an update on {!$Record.Deliverable__r.Name}.
+
+Reported status: {!$Record.Reported_Status__c}
+Percent complete: {!$Record.Percent_Complete__c}
+Forecast completion: {!$Record.Forecast_Completion_Date__c}
+Requires customer action: {!$Record.Requires_Customer_Action__c}
+
+Progress summary:
+{!$Record.Progress_Summary__c}
+
+Blockers:
+{!$Record.Blockers__c}
+
+Review it from the Updates related list on the deliverable (update {!$Record.Name}).</text>
+    </textTemplates>
+    <textTemplates>
+        <name>ttNotificationBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Reported status: {!$Record.Reported_Status__c}. {!$Record.Progress_Summary__c}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>ttTitle</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Supplier update submitted: {!$Record.Deliverable__r.Name}</text>
+    </textTemplates>
+    <variables>
+        <name>recipientIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

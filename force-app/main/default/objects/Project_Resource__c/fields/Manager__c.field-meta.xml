@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Manager__c</fullName>
+    <label>Manager</label>
+    <referenceTo>User</referenceTo>
+    <relationshipLabel>Project Resources (Manager)</relationshipLabel>
+    <relationshipName>Project_Resources_Manager</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

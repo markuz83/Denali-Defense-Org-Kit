@@ -1,0 +1,136 @@
+.spinner-holder {
+    min-height: var(--slds-g-sizing-10, 3rem);
+}
+
+.value {
+    font-size: var(--slds-g-font-scale-4, 1.5rem);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    font-variant-numeric: tabular-nums;
+}
+
+.funding-bar {
+    height: var(--slds-g-sizing-3, 0.5rem);
+    border-radius: var(--slds-g-radius-border-4, 1.25rem);
+    background: var(--slds-g-color-surface-container-3, #e5e5e5);
+    margin-top: var(--slds-g-spacing-1, 0.25rem);
+}
+
+.seg {
+    height: 100%;
+}
+
+.seg-recognized,
+.key-recognized {
+    background: var(--slds-g-color-success-1, #056764);
+}
+
+.seg-funded,
+.key-funded {
+    background: var(--slds-g-color-accent-1, #066afe);
+}
+
+.key-unfunded {
+    background: var(--slds-g-color-disabled-container-2, #c9c9c9);
+}
+
+.funding-legend {
+    gap: var(--slds-g-spacing-1, 0.25rem) var(--slds-g-spacing-3, 0.75rem);
+    margin-top: var(--slds-g-spacing-1, 0.25rem);
+}
+
+.key {
+    width: var(--slds-g-sizing-3, 0.5rem);
+    height: var(--slds-g-sizing-3, 0.5rem);
+    border-radius: var(--slds-g-radius-border-circle, 50%);
+    margin-right: var(--slds-g-spacing-1, 0.25rem);
+}
+
+.pair {
+    gap: var(--slds-g-spacing-3, 0.75rem);
+}
+
+.pair > div {
+    flex: 1 1 12rem;
+}
+
+.margin-values {
+    font-weight: var(--slds-g-font-weight-6, 600);
+    font-variant-numeric: tabular-nums;
+}
+
+.variance {
+    font-weight: var(--slds-g-font-weight-6, 600);
+    margin-left: var(--slds-g-spacing-1, 0.25rem);
+}
+
+.option {
+    padding: var(--slds-g-spacing-2, 0.5rem) var(--slds-g-spacing-3, 0.75rem);
+    border-radius: var(--slds-g-radius-border-2, 0.5rem);
+    border-left: var(--slds-g-sizing-border-4, 4px) solid;
+}
+
+.option-label {
+    font-weight: var(--slds-g-font-weight-6, 600);
+}
+
+.option-urgent {
+    background: var(--slds-g-color-error-container-1, #fddde3);
+    border-color: var(--slds-g-color-border-error-1, #b60554);
+}
+
+.option-soon {
+    background: var(--slds-g-color-warning-container-1, #f9e3b6);
+    border-color: var(--slds-g-color-border-warning-1, #dd7a01);
+}
+
+.option-ok {
+    background: var(--slds-g-color-success-container-1, #acf3e4);
+    border-color: var(--slds-g-color-border-success-1, #056764);
+}
+
+.option-past {
+    background: var(--slds-g-color-surface-container-2, #f3f3f3);
+    border-color: var(--slds-g-color-border-2, #5c5c5c);
+}
+
+.tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.tile {
+    border: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-border-1, #c9c9c9);
+    border-radius: var(--slds-g-radius-border-2, 0.5rem);
+    padding: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.tile-alert {
+    border-left: var(--slds-g-sizing-border-4, 4px) solid var(--slds-g-color-border-error-1, #b60554);
+}
+
+.tile-label {
+    font-size: var(--slds-g-font-scale-neg-1, 0.75rem);
+    color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+.tile-value {
+    font-weight: var(--slds-g-font-weight-6, 600);
+    font-variant-numeric: tabular-nums;
+}
+
+.project {
+    gap: var(--slds-g-spacing-2, 0.5rem);
+}
+
+.project-main {
+    flex: 1 1 auto;
+}
+
+.project-margin {
+    white-space: nowrap;
+}
+
+.health {
+    margin-top: var(--slds-g-spacing-1, 0.25rem);
+}

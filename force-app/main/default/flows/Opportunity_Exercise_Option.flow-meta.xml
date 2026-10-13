@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <decisions>
+        <name>Option_Left_to_Exercise</name>
+        <label>Option Left to Exercise?</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>No Option Left</defaultConnectorLabel>
+        <rules>
+            <name>Exercise_It</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Contract</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Contract.Current_Period__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Option Year 4</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Contract</targetReference>
+            </connector>
+            <label>Exercise It</label>
+        </rules>
+    </decisions>
+    <description>When an Option Exercise opportunity linked to a Contract moves to Closed Won, exercises the option on that Contract: Current Period moves up one year (Base or blank becomes Option Year 1), Next Option Date moves a year later (cleared when the new period is Option Year 4 or the date would reach the contract end), and Funded Value grows by the deal Amount. Contract Value is the ceiling and already includes the options; it only rises when the new funding would exceed it (an option priced above the original estimate). Skips a contract already in Option Year 4. Reopening and re-winning the same deal exercises another option, so correct the contract by hand if that happens.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>fxNextPeriod</name>
+        <dataType>String</dataType>
+        <expression>CASE(TEXT({!Get_Contract.Current_Period__c}), &quot;Option Year 1&quot;, &quot;Option Year 2&quot;, &quot;Option Year 2&quot;, &quot;Option Year 3&quot;, &quot;Option Year 3&quot;, &quot;Option Year 4&quot;, &quot;Option Year 1&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>A year after the current Next Option Date; blank when the new period is the last option year, there was no option date, or the next one would fall on or after the contract end.</description>
+        <name>fxNextOptionDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(OR(ISBLANK({!Get_Contract.Next_Option_Date__c}), {!fxNextPeriod} = &quot;Option Year 4&quot;, AND(NOT(ISBLANK({!Get_Contract.EndDate})), ADDMONTHS({!Get_Contract.Next_Option_Date__c}, 12) &gt;= {!Get_Contract.EndDate})), NULL, ADDMONTHS({!Get_Contract.Next_Option_Date__c}, 12))</expression>
+    </formulas>
+    <formulas>
+        <name>fxFundedValue</name>
+        <dataType>Currency</dataType>
+        <expression>BLANKVALUE({!Get_Contract.Funded_Value__c}, 0) + BLANKVALUE({!$Record.Amount}, 0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <description>The ceiling stays unless the new funding would exceed it; a blank ceiling stays blank.</description>
+        <name>fxContractValue</name>
+        <dataType>Currency</dataType>
+        <expression>IF(ISBLANK({!Get_Contract.Contract_Value__c}), NULL, MAX({!Get_Contract.Contract_Value__c}, {!fxFundedValue}))</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Opportunity Exercise Option {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Exercise Option</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Contract</name>
+        <label>Get Contract</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Option_Left_to_Exercise</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ContractId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contract</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Current_Period__c</queriedFields>
+        <queriedFields>Next_Option_Date__c</queriedFields>
+        <queriedFields>Funded_Value__c</queriedFields>
+        <queriedFields>Contract_Value__c</queriedFields>
+        <queriedFields>EndDate</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Contract</name>
+        <label>Update Contract</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Contract.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Current_Period__c</field>
+            <value>
+                <elementReference>fxNextPeriod</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Next_Option_Date__c</field>
+            <value>
+                <elementReference>fxNextOptionDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Funded_Value__c</field>
+            <value>
+                <elementReference>fxFundedValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract_Value__c</field>
+            <value>
+                <elementReference>fxContractValue</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Contract</object>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Contract</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed Won</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Option Exercise</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ContractId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

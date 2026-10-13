@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Root_Cause_Required_On_Close</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Status, "Closed"), OR(ISPICKVAL(Type, "Incident"), ISPICKVAL(Type, "Problem")), ISBLANK(TEXT(Root_Cause__c)))</errorConditionFormula>
+    <errorDisplayField>Root_Cause__c</errorDisplayField>
+    <errorMessage>Select a Root Cause before closing an Incident or Problem.</errorMessage>
+</ValidationRule>

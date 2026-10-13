@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pricing_Rationale__c</fullName>
+    <description>Drafted by Einstein (Pricing Rationale prompt template, via the Opportunity Pricing Rationale flow) when the deal drops below its Margin Floor. Shown to the approver on the Margin Exception approval page; the capture manager should edit it before submitting.</description>
+    <label>Pricing Rationale</label>
+    <length>5000</length>
+    <type>LongTextArea</type>
+    <visibleLines>8</visibleLines>
+</CustomField>

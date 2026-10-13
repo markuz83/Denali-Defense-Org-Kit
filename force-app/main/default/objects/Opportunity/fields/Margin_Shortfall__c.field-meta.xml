@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Margin_Shortfall__c</fullName>
+    <description>Profit given up versus pricing at the Margin Floor: Amount x (Margin Floor - Estimated Margin). Blank when the deal is at or above the floor.</description>
+    <formula>IF(Below_Margin_Floor__c, Amount * (Margin_Floor__c - Estimated_Margin__c), NULL)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Profit given up versus pricing at the floor for this contract type.</inlineHelpText>
+    <label>Margin Shortfall</label>
+    <precision>18</precision>
+    <scale>2</scale>
+    <type>Currency</type>
+</CustomField>

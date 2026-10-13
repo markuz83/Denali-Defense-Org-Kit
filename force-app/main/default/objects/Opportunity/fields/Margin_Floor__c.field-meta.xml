@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Margin_Floor__c</fullName>
+    <description>Minimum acceptable Estimated Margin for the contract type, reflecting who carries cost risk: Cost Plus 7%, Time &amp; Materials 10%, Fixed Price (and unknown) 12%.</description>
+    <formula>CASE(TEXT(Contract_Type__c), &quot;Cost Plus&quot;, 0.07, &quot;Time &amp; Materials&quot;, 0.10, 0.12)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Cost Plus 7%, Time &amp; Materials 10%, Fixed Price 12%. Below this, the deal needs Pricing Review approval before proposal.</inlineHelpText>
+    <label>Margin Floor %</label>
+    <precision>18</precision>
+    <scale>2</scale>
+    <type>Percent</type>
+</CustomField>

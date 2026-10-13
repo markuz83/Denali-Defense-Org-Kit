@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Refresh_Measures</name>
+        <label>Refresh Measures</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>AccountPlanMeasureRefresh</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>opportunityId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>AccountPlanMeasureRefresh</nameSegment>
+    </actionCalls>
+    <apiVersion>64.0</apiVersion>
+    <description>When an Opportunity&apos;s stage or amount changes, recalculates the Sales Account Plan measures linked to it (Salesforce only calculates them when a deal is linked). Closing a deal then moves its account plan straight away. The work is in the AccountPlanMeasureRefresh Apex class.</description>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity Refresh Account Plan Measures {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Refresh Account Plan Measures</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Refresh_Measures</targetReference>
+        </connector>
+        <filterFormula>OR(ISCHANGED({!$Record.StageName}), ISCHANGED({!$Record.Amount}))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

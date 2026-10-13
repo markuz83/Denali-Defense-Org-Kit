@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Account Command Center</masterLabel>
+    <description>One screen for an account's contracts, projects, deliverables, timeline, risks and service. Uses the record on an Account page; shows an account picker on an app page.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+            </objects>
+            <property name="hideSuppliersAndTeam" type="Boolean" default="false" label="Hide Suppliers and Team (no longer used)"
+                description="Has no effect. Supplier updates, suppliers and the team are now the separate Account Supplier Updates, Account Suppliers and Account Team components."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,0 +1,77 @@
+.spinner-holder {
+    min-height: var(--slds-g-sizing-10, 3rem);
+}
+
+.headline {
+    font-weight: var(--slds-g-font-weight-6, 600);
+    padding: var(--slds-g-spacing-2, 0.5rem) var(--slds-g-spacing-3, 0.75rem);
+    border-radius: var(--slds-g-radius-border-2, 0.5rem);
+    border-left: var(--slds-g-sizing-border-4, 4px) solid var(--slds-g-color-border-2, #5c5c5c);
+    background: var(--slds-g-color-surface-container-2, #f3f3f3);
+}
+
+.headline-alert {
+    border-color: var(--slds-g-color-border-error-1, #b60554);
+    background: var(--slds-g-color-error-container-1, #fddde3);
+}
+
+.node {
+    position: relative;
+    display: flex;
+    gap: var(--slds-g-spacing-2, 0.5rem);
+    padding-bottom: var(--slds-g-spacing-3, 0.75rem);
+}
+
+/* Connector line between nodes */
+.node::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--slds-g-sizing-3, 0.5rem) / 2 - var(--slds-g-sizing-border-2, 2px) / 2);
+    top: calc(var(--slds-g-spacing-1, 0.25rem) + var(--slds-g-sizing-3, 0.5rem));
+    bottom: 0;
+    width: var(--slds-g-sizing-border-2, 2px);
+    background: var(--slds-g-color-disabled-container-2, #c9c9c9);
+}
+
+.node-last::before {
+    display: none;
+}
+
+.node-last {
+    padding-bottom: 0;
+}
+
+.dot {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 auto;
+    width: var(--slds-g-sizing-3, 0.5rem);
+    height: var(--slds-g-sizing-3, 0.5rem);
+    border-radius: var(--slds-g-radius-border-circle, 50%);
+    margin-top: var(--slds-g-spacing-1, 0.25rem);
+    background: var(--slds-g-color-disabled-container-2, #c9c9c9);
+    box-shadow: 0 0 0 var(--slds-g-sizing-border-2, 2px) var(--slds-g-color-surface-1, #ffffff);
+}
+
+.dot-green {
+    background: var(--slds-g-color-success-1, #056764);
+}
+
+.dot-yellow {
+    background: var(--slds-g-color-border-warning-1, #dd7a01);
+}
+
+.dot-red {
+    background: var(--slds-g-color-error-1, #b60554);
+}
+
+.kind {
+    font-size: var(--slds-g-font-scale-neg-2, 0.625rem);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+.node-name {
+    font-weight: var(--slds-g-font-weight-6, 600);
+}

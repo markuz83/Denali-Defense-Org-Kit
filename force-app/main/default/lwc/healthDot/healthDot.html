@@ -1,0 +1,9 @@
+<template>
+    <template lwc:if={icon}>
+        <lightning-icon icon-name={icon.name} variant={icon.variant} size={size} alternative-text={label} title={label}></lightning-icon>
+    </template>
+    <template lwc:elseif={isBlank}>
+        <span class="spacer slds-show_inline-block"></span>
+    </template>
+    <template lwc:else>{value}</template>
+</template>

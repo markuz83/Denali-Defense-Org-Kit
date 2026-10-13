@@ -1,0 +1,120 @@
+<template>
+    <lightning-card title="Margin Guardrail" icon-name="standard:price_adjustment_matrix">
+        <template lwc:if={statusBadge}>
+            <lightning-badge slot="actions" label={statusBadge.label} class={statusBadge.className}></lightning-badge>
+        </template>
+        <div class="slds-var-p-horizontal_medium">
+            <template lwc:if={isLoading}>
+                <div class="spinner-holder slds-is-relative"><lightning-spinner alternative-text="Loading" size="small"></lightning-spinner></div>
+            </template>
+            <template lwc:if={error}>
+                <p class="slds-text-color_error">{error}</p>
+            </template>
+
+            <template lwc:if={opp}>
+                <template lwc:if={hasMargin}>
+                    <!-- Headline -->
+                    <div class="headline slds-grid">
+                        <span class="margin-value">{marginLabel}</span>
+                        <span class="gap-score slds-grid slds-grid_vertical-align-center">
+                            <lightning-dynamic-icon type="score" option={scoreOption} alternative-text={scoreLabel} title={scoreLabel}></lightning-dynamic-icon>
+                            <span class={gapClass}>{gapLabel}</span>
+                        </span>
+                    </div>
+                    <p class="slds-text-body_small slds-text-color_weak">Estimated margin · {floorLabel}</p>
+
+                    <!-- Bar -->
+                    <div class="bar" role="img" aria-label={gapLabel}>
+                        <div class="bar-track slds-is-relative">
+                            <div class={marginBarClass} style={marginBarStyle}></div>
+                            <div class="marker marker-floor" style={floorMarkerStyle} title={floorLabel}></div>
+                            <template lwc:if={hasWonReference}>
+                                <div class="marker marker-won" style={wonMarkerStyle} title={wonLabel}></div>
+                            </template>
+                        </div>
+                        <div class="bar-scale slds-is-relative">
+                            <template for:each={scaleTicks} for:item="tick">
+                                <span key={tick.key} class="tick" style={tick.style}>{tick.label}</span>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="legend slds-grid slds-wrap slds-text-body_small">
+                        <span><span class="key slds-show_inline-block key-floor"></span>Floor</span>
+                        <template lwc:if={hasWonReference}>
+                            <span><span class="key slds-show_inline-block key-won"></span>{wonLabel}</span>
+                        </template>
+                    </div>
+                    <template lwc:if={allWonLabel}>
+                        <p class="slds-text-body_small slds-text-color_weak">{allWonLabel}</p>
+                    </template>
+
+                    <!-- Facts -->
+                    <dl class="facts slds-grid slds-wrap slds-var-m-top_small">
+                        <div>
+                            <dt>Amount</dt>
+                            <dd>{amountLabel}</dd>
+                        </div>
+                        <template lwc:if={shortfallLabel}>
+                            <div>
+                                <dt>Profit given up vs floor</dt>
+                                <dd class="slds-text-color_error">{shortfallLabel}</dd>
+                            </div>
+                        </template>
+                    </dl>
+                    <template lwc:if={incumbentLine}>
+                        <p class="slds-text-body_small slds-var-m-top_x-small">{incumbentLine}</p>
+                    </template>
+                </template>
+                <template lwc:else>
+                    <p class="slds-text-color_weak">Set an Estimated Margin to check this deal against its floor.</p>
+                </template>
+
+                <!-- Approval -->
+                <template lwc:if={isPending}>
+                    <div class="note note-info slds-var-m-top_small">{pendingLine}</div>
+                </template>
+                <template lwc:if={isApproved}>
+                    <div class="note note-success slds-var-m-top_small">Pricing Review approved this price. It needs re-approval if the margin or contract type changes.</div>
+                </template>
+                <template lwc:if={isRejected}>
+                    <div class="note note-error slds-var-m-top_small">{rejectedLine}</div>
+                </template>
+                <template lwc:if={canSubmit}>
+                    <div class="submit slds-var-m-top_small">
+                        <lightning-record-picker label="Pricing reviewer" placeholder="Search people…" object-api-name="User"
+                            filter={approverFilter} onchange={handleApproverChange}></lightning-record-picker>
+                        <lightning-textarea label="Note to the reviewer (optional)" value={comments}
+                            onchange={handleCommentsChange} class="slds-var-m-top_x-small"></lightning-textarea>
+                        <lightning-button variant="brand" label="Submit for Pricing Review" class="slds-var-m-top_x-small"
+                            disabled={submitDisabled} onclick={handleSubmit}></lightning-button>
+                    </div>
+                </template>
+
+                <!-- Rationale -->
+                <template lwc:if={showRationale}>
+                    <div class="rationale slds-var-m-top_medium">
+                        <div class="rationale-head slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                            <h3 class="slds-text-title_caps">Pricing Rationale</h3>
+                            <template lwc:if={canRegenerate}>
+                                <lightning-button label={regenerateLabel} icon-name="utility:einstein" variant="base"
+                                    disabled={regenerating} onclick={handleRegenerate}></lightning-button>
+                            </template>
+                        </div>
+                        <template lwc:if={regenerating}>
+                            <div class="spinner-holder slds-is-relative"><lightning-spinner alternative-text="Drafting" size="small"></lightning-spinner></div>
+                        </template>
+                        <template lwc:elseif={rationale}>
+                            <lightning-formatted-text value={rationale} class="rationale-text slds-show"></lightning-formatted-text>
+                            <p class="slds-text-body_small slds-text-color_weak slds-var-m-top_x-small">
+                                Drafted by Einstein from this deal&apos;s fields. Edit it on the record before submitting.
+                            </p>
+                        </template>
+                        <template lwc:else>
+                            <p class="slds-text-color_weak">No rationale yet.</p>
+                        </template>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>
